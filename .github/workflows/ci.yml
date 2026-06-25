@@ -78,6 +78,7 @@ jobs:
       - name: Boot CLI
         run: |
           touch storage/database.sqlite
+          export SPORA_SECRET_KEY="$(php -r 'echo base64_encode(random_bytes(32));')"
           php bin/spora spora:install
           php bin/spora --version || true
 

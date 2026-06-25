@@ -1,5 +1,5 @@
 {
-    "name": "spora-ai/spora-skeleton",
+    "name": "spora-ai/spora",
     "description": "Spora operator-facing project template — Bedrock-style template for AI agent orchestration on shared hosting (cPanel/FTP). Requires spora-ai/spora-core (framework) and spora-ai/spora-frontend (admin UI).",
     "type": "project",
     "license": "MIT",

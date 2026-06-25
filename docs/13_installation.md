@@ -5,7 +5,7 @@ Spora ships as three coordinated Composer packages: the framework, the admin UI,
 ## Standard install (Packagist)
 
 ```bash
-composer create-project spora-ai/spora-skeleton my-app
+composer create-project spora-ai/spora my-app
 cd my-app
 composer install
 php bin/spora spora:install
@@ -25,7 +25,7 @@ The admin UI is **prebuilt** — no Node toolchain is required on the operator's
 
 ```bash
 # On your dev machine:
-composer create-project spora-ai/spora-skeleton my-app
+composer create-project spora-ai/spora my-app
 cd my-app
 composer install --no-dev --optimize-autoloader
 
@@ -42,7 +42,7 @@ Set the document root to the `public/` directory, not the project root. Update `
 ## Development install (HMR)
 
 ```bash
-git clone https://github.com/spora-ai/spora-skeleton my-app
+git clone https://github.com/spora-ai/spora my-app
 cd my-app
 git clone https://github.com/spora-ai/spora-frontend ..
 composer require spora-ai/spora-frontend --path=../spora-frontend

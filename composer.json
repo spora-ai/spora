@@ -1,0 +1,39 @@
+{
+    "name": "spora-ai/spora-skeleton",
+    "description": "Spora operator-facing project template — Bedrock-style template for AI agent orchestration on shared hosting (cPanel/FTP). Requires spora-ai/spora-core (framework) and spora-ai/spora-frontend (admin UI).",
+    "type": "project",
+    "license": "MIT",
+    "version": "0.1.0",
+    "require": {
+        "php": "^8.4.1",
+        "spora-ai/spora-core": "^0.3",
+        "spora-ai/spora-frontend": "^0.1",
+        "spora-ai/installer": "^1.2"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "pestphp/pest": "^4.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "spora-ai/installer": true
+        }
+    },
+    "scripts": {
+        "dev": "php bin/dev",
+        "test": "pest",
+        "analyse": "phpstan analyse --no-progress",
+        "lint": "php-cs-fixer fix --dry-run --diff",
+        "setup": "php bin/spora spora:install",
+        "seed": "php bin/spora db:seed",
+        "reset": "php bin/spora db:reset --force",
+        "install:db": "php bin/spora spora:install"
+    },
+    "extra": {
+        "branch-alias": { "dev-main": "0.1.x-dev" }
+    }
+}

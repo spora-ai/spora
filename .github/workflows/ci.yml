@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate composer manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Validate composer.json
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+      - run: composer validate --strict --no-check-lock
+
+  smoke:
+    name: Boot smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_sqlite, zip
+          tools: composer
+
+      # Skeleton pulls prebuilt assets from Packagist at install time, but
+      # we want the smoke test to be hermetic — fake the frontend dist via
+      # a path repo pointing at a stub package, so we can verify the install
+      # path without hitting the network.
+      - name: Create stub spora-frontend dist
+        run: |
+          mkdir -p /tmp/stub-frontend/dist
+          echo '<!doctype html><title>Spora</title>' > /tmp/stub-frontend/dist/index.html
+
+      - name: composer install (with stub frontend)
+        run: |
+          composer config repositories.spora-frontend path /tmp/stub-frontend
+          composer require spora-ai/spora-frontend:^0.1 --no-interaction --no-update
+          composer config --json extra.installer-paths '{"public/dist/": ["type:spora-frontend"]}'
+          composer install --no-interaction
+        env:
+          COMPOSER_ALLOW_SUPERUSER: 1
+
+      - name: Verify public/dist/index.html routed by installer
+        run: test -f public/dist/index.html
+
+      - name: Boot CLI
+        run: |
+          touch storage/database.sqlite
+          php bin/spora spora:install
+          php bin/spora --version || true
+
+  build-docker:
+    name: Build operator image
+    needs: validate
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=sha,prefix=sha-
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name == 'push' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

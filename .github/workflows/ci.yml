@@ -46,10 +46,14 @@ jobs:
       # we want the smoke test to be hermetic — fake the frontend dist via
       # a path repo pointing at a stub package, so we can verify the install
       # path without hitting the network.
+      #
+      # The installer copies the package root verbatim into public/dist/
+      # (SporaFrontendInstaller extends LibraryInstaller with a fixed
+      # target), so index.html lives at the package root in the stub.
       - name: Create stub spora-frontend dist
         run: |
-          mkdir -p /tmp/stub-frontend/dist
-          echo '<!doctype html><title>Spora</title>' > /tmp/stub-frontend/dist/index.html
+          mkdir -p /tmp/stub-frontend
+          echo '<!doctype html><title>Spora</title>' > /tmp/stub-frontend/index.html
           cat > /tmp/stub-frontend/composer.json <<'JSON'
           {
               "name": "spora-ai/spora-frontend",
@@ -64,7 +68,6 @@ jobs:
         run: |
           composer config repositories.spora-frontend path /tmp/stub-frontend
           composer require spora-ai/spora-frontend:^0.1 --no-interaction --no-update
-          composer config --json extra.installer-paths '{"public/dist/": ["type:spora-frontend"]}'
           composer install --no-interaction
         env:
           COMPOSER_ALLOW_SUPERUSER: 1

@@ -30,10 +30,6 @@ jobs:
       - run: composer validate --no-check-lock
 
   smoke:
-    # TODO(post-v0.1.0): enable once spora-ai/installer ^1.2 and
-    # spora-ai/spora-frontend ^0.1 are on Packagist. The CI as written
-    # needs both to be available before it can verify the install path.
-    if: false
     name: Boot smoke test
     runs-on: ubuntu-latest
     steps:
@@ -54,6 +50,15 @@ jobs:
         run: |
           mkdir -p /tmp/stub-frontend/dist
           echo '<!doctype html><title>Spora</title>' > /tmp/stub-frontend/dist/index.html
+          cat > /tmp/stub-frontend/composer.json <<'JSON'
+          {
+              "name": "spora-ai/spora-frontend",
+              "description": "Stub frontend package for the smoke test — replaced on Packagist at install time.",
+              "type": "spora-frontend",
+              "license": "MIT",
+              "version": "0.1.0"
+          }
+          JSON
 
       - name: composer install (with stub frontend)
         run: |
@@ -74,13 +79,9 @@ jobs:
           php bin/spora --version || true
 
   build-docker:
-    # TODO(post-v0.1.0): enable once spora-ai/installer ^1.2 and
-    # spora-ai/spora-frontend ^0.1 are on Packagist. The job as written
-    # runs `composer install` inside the Docker build, which needs both
-    # packages to be resolvable on Packagist.
-    if: false
     name: Build operator image
     needs: validate
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read

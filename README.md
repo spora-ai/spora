@@ -11,7 +11,7 @@ This is what operators `composer create-project` to spin up their own Spora inst
 ## Quick start
 
 ```bash
-composer create-project spora-ai/spora-skeleton my-app
+composer create-project spora-ai/spora my-app
 cd my-app
 
 # Install dependencies (this also installs the prebuilt admin UI):

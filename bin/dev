@@ -1,30 +1,19 @@
 #!/usr/bin/env bash
 #
-# Start the local development stack for a Spora operator install.
+# Start the PHP built-in server for the Spora operator install.
+# Serves public/dist/ (prebuilt admin UI) and /api/* (kernel).
 #
-# Behavior:
-#   - PHP built-in server ALWAYS runs on ${PHP_PORT:-8080} (serves /api + public/dist/).
-#   - Vite dev server runs ONLY when the frontend is a path-installed source repo
-#     (e.g. via `composer require --path=../spora-frontend`) — in that case HMR works.
-#   - When the frontend is a dist-installed Composer package (the production install
-#     via spora-ai/installer routing it to public/dist/), Vite is skipped; the UI is
-#     served as static assets from public/dist/.
+# For full-stack development, start Vite separately:
+#   cd vendor/spora-ai/spora-frontend   # if path-installed
+#   npm run dev                         # Vite on :5173, proxies /api to PHP
 #
-# Override with SPORA_FRONTEND_DEV=1 to force Vite mode even on a dist install
-# (useful when you want HMR against a prebuilt package without re-installing).
-#
-# Ports can be configured via .env in the project root:
-#   PHP_PORT=8081
-#   VITE_PORT=5174
-#   SPORA_FRONTEND_DEV=1
+# Ports via env (PHP_PORT defaults to 8080).
 
 set -euo pipefail
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BASE_DIR="$(dirname "$SCRIPT_DIR")"
 PHP_LOG="$BASE_DIR/storage/php.log"
 
-# Load .env file if it exists
 if [[ -f "$BASE_DIR/.env" ]]; then
     set -a
     source "$BASE_DIR/.env"
@@ -32,59 +21,8 @@ if [[ -f "$BASE_DIR/.env" ]]; then
 fi
 
 PHP_PORT="${PHP_PORT:-8080}"
-VITE_PORT="${VITE_PORT:-5173}"
 
 mkdir -p "$BASE_DIR/storage"
 
-# ── PHP server (always) ────────────────────────────────────────────────────────
-
 echo "Starting PHP server on http://localhost:${PHP_PORT} (log: storage/php.log)"
-php -S "localhost:${PHP_PORT}" -t "$BASE_DIR/public" > "$PHP_LOG" 2>&1 &
-PHP_PID=$!
-
-cleanup() {
-    kill "$PHP_PID" 2>/dev/null || true
-}
-trap cleanup EXIT INT TERM
-
-# ── Vite (only on path install or when forced) ────────────────────────────────
-
-needs_vite() {
-    if [[ "${SPORA_FRONTEND_DEV:-0}" == "1" ]]; then
-        return 0
-    fi
-
-    # Heuristic 1: composer show -i reports source.type = "path"
-    local info
-    info="$(composer show -i spora-ai/spora-frontend --format=json 2>/dev/null || echo '{}')"
-    local source_type
-    source_type="$(echo "$info" | php -r 'echo (json_decode(file_get_contents("php://stdin"), true)["source"]["type"] ?? "");' 2>/dev/null || true)"
-    if [[ "$source_type" == "path" ]]; then
-        return 0
-    fi
-
-    # Heuristic 2: vendor/spora-ai/spora-frontend is a symlink to a real on-disk checkout
-    if [[ -L "$BASE_DIR/vendor/spora-ai/spora-frontend" ]]; then
-        return 0
-    fi
-
-    return 1
-}
-
-if needs_vite; then
-    if [[ ! -d "$BASE_DIR/vendor/spora-ai/spora-frontend" ]]; then
-        echo "WARN: SPORA_FRONTEND_DEV=1 but vendor/spora-ai/spora-frontend is missing. Falling back to dist." >&2
-    else
-        echo "Starting Vite dev server on http://localhost:${VITE_PORT} (source: vendor/spora-ai/spora-frontend/)"
-        (
-            cd "$BASE_DIR/vendor/spora-ai/spora-frontend"
-            VITE_PORT="$VITE_PORT" npx vite --port "$VITE_PORT"
-        )
-        exit 0
-    fi
-fi
-
-echo "Vite not started (dist install); UI served from public/dist/"
-echo "Press Ctrl+C to stop PHP."
-
-wait "$PHP_PID"
+exec php -S "localhost:${PHP_PORT}" -t "$BASE_DIR/public" > "$PHP_LOG" 2>&1

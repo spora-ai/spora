@@ -1,4 +1,4 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/vendor/spora-ai/spora-core/bin/spora';
+require dirname(__DIR__) . '/vendor/spora-ai/spora-core/bin/spora';

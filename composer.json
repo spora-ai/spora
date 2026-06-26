@@ -20,7 +20,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "spora-ai/installer": true
+            "spora-ai/installer": true,
+            "composer/installers": true
         }
     },
     "scripts": {

@@ -30,10 +30,6 @@ jobs:
       - run: composer validate --no-check-lock
 
   smoke:
-    # TODO(post-v0.1.0): enable once spora-ai/installer ^1.2 and
-    # spora-ai/spora-frontend ^0.1 are on Packagist. The CI as written
-    # needs both to be available before it can verify the install path.
-    if: false
     name: Boot smoke test
     runs-on: ubuntu-latest
     steps:
@@ -50,16 +46,28 @@ jobs:
       # we want the smoke test to be hermetic — fake the frontend dist via
       # a path repo pointing at a stub package, so we can verify the install
       # path without hitting the network.
+      #
+      # The installer copies the package root verbatim into public/dist/
+      # (SporaFrontendInstaller extends LibraryInstaller with a fixed
+      # target), so index.html lives at the package root in the stub.
       - name: Create stub spora-frontend dist
         run: |
-          mkdir -p /tmp/stub-frontend/dist
-          echo '<!doctype html><title>Spora</title>' > /tmp/stub-frontend/dist/index.html
+          mkdir -p /tmp/stub-frontend
+          echo '<!doctype html><title>Spora</title>' > /tmp/stub-frontend/index.html
+          cat > /tmp/stub-frontend/composer.json <<'JSON'
+          {
+              "name": "spora-ai/spora-frontend",
+              "description": "Stub frontend package for the smoke test — replaced on Packagist at install time.",
+              "type": "spora-frontend",
+              "license": "MIT",
+              "version": "0.1.0"
+          }
+          JSON
 
       - name: composer install (with stub frontend)
         run: |
           composer config repositories.spora-frontend path /tmp/stub-frontend
           composer require spora-ai/spora-frontend:^0.1 --no-interaction --no-update
-          composer config --json extra.installer-paths '{"public/dist/": ["type:spora-frontend"]}'
           composer install --no-interaction
         env:
           COMPOSER_ALLOW_SUPERUSER: 1
@@ -70,17 +78,14 @@ jobs:
       - name: Boot CLI
         run: |
           touch storage/database.sqlite
+          export SPORA_SECRET_KEY="$(php -r 'echo base64_encode(random_bytes(32));')"
           php bin/spora spora:install
           php bin/spora --version || true
 
   build-docker:
-    # TODO(post-v0.1.0): enable once spora-ai/installer ^1.2 and
-    # spora-ai/spora-frontend ^0.1 are on Packagist. The job as written
-    # runs `composer install` inside the Docker build, which needs both
-    # packages to be resolvable on Packagist.
-    if: false
     name: Build operator image
     needs: validate
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read

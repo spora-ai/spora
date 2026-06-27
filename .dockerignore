@@ -1,0 +1,55 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Tests + dev artifacts
+tests
+coverage
+.phpunit.cache
+phpunit.xml
+phpunit.xml.dist
+phpstan.neon
+phpstan.neon.dist
+phpstan-bootstrap.php
+
+# CI / workflows
+.github
+
+# Docker self-reference (Dockerfile and docker-compose.yml aren't needed inside
+# the image; supervisord.conf / frankenphp.conf / entrypoint.sh are pulled in
+# by explicit `COPY docker/...` lines below)
+docker/Dockerfile
+docker/docker-compose.yml
+
+# Editor / OS
+.idea
+.vscode
+.DS_Store
+
+# Logs / runtime data (created at runtime inside the container)
+storage/*.log
+storage/php.log
+storage/.schema_stamp
+storage/.plugins_stamp
+storage/.worker.lock
+storage/database.sqlite
+storage/database-backup.sqlite
+
+# Composer + Node deps (vendor/ is shipped from the deps-builder stage;
+# node_modules/ should never appear in the operator project but exclude
+# defensively in case it does)
+vendor
+node_modules
+
+# Frontend dev tree — the operator install ships prebuilt assets via the
+# spora-ai/spora-frontend Composer package, not a from-source build
+frontend
+
+# Docs + agent instructions — not needed inside the image
+docs
+AGENTS.md
+CLAUDE.md
+CONTRIBUTING.md
+*.md
+!README.md

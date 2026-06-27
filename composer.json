@@ -24,7 +24,7 @@
         }
     },
     "scripts": {
-        "dev": "php bin/dev",
+        "dev": "php -S ${PHP_PORT:-8080} -t public",
         "test": "pest",
         "analyse": "phpstan analyse --no-progress",
         "lint": "php-cs-fixer fix --dry-run --diff",

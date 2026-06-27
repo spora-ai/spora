@@ -48,8 +48,24 @@ git clone https://github.com/spora-ai/spora-frontend ..
 composer require spora-ai/spora-frontend --path=../spora-frontend
 composer install
 php bin/spora spora:install
-composer dev   # starts Vite with HMR
 ```
+
+## Development mode
+
+`composer dev` starts the PHP server on `http://localhost:${PHP_PORT:-8080}`.
+
+For full-stack dev (HMR), start Vite in a second terminal:
+
+```bash
+# Terminal 1: PHP + Spora API
+composer dev
+
+# Terminal 2: Vite dev server (path-installed frontend only)
+cd vendor/spora-ai/spora-frontend
+npm run dev
+```
+
+Vite's `server.proxy['/api']` forwards API calls to PHP. Visit `http://localhost:5173` for HMR; the API lives at `:8080/api/*`.
 
 ## Docker install
 

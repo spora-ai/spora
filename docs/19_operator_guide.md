@@ -24,10 +24,10 @@ SPORA_PLUGIN_INSTALL_ENABLED=true
 Or via CLI:
 
 ```bash
-php bin/spora plugin:install spora-ai/spora-plugin-tavily
-php bin/spora plugin:list
-php bin/spora plugin:uninstall spora-ai/spora-plugin-tavily
-php bin/spora plugin:update spora-ai/spora-plugin-tavily
+php bin/spora spora:plugin:install spora-ai/spora-plugin-tavily
+php bin/spora spora:plugin:list
+php bin/spora spora:plugin:uninstall spora-ai/spora-plugin-tavily
+php bin/spora spora:plugin:update spora-ai/spora-plugin-tavily
 ```
 
 Plugins land in `plugins/<name>/` (routed by `spora-ai/installer`). Each plugin owns its own migrations, tools, and assets.

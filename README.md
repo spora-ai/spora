@@ -42,7 +42,7 @@ Open <http://localhost:8080> in a browser. Log in with the seeded admin credenti
 Plugins ship as Composer packages of type `spora-plugin`. Install via CLI:
 
 ```bash
-php bin/spora plugin:install spora-ai/spora-plugin-tavily
+php bin/spora spora:plugin:install spora-ai/spora-plugin-tavily
 ```
 
 Or via the admin UI at `/apps/plugins` (requires `SPORA_PLUGIN_INSTALL_ENABLED=true`).

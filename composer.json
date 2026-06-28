@@ -24,7 +24,10 @@
         }
     },
     "scripts": {
-        "dev": "bash -c 'CMD=\"php -S ${PHP_HOST:-0.0.0.0}:${PHP_PORT:-8080} -t public\"; if [ -n \"$COMPOSER_DEV_TIMEOUT\" ]; then exec $CMD; elif command -v gtimeout >/dev/null; then exec gtimeout ${COMPOSER_DEV_TIMEOUT:-3600} $CMD; elif command -v timeout >/dev/null; then exec timeout ${COMPOSER_DEV_TIMEOUT:-3600} $CMD; else exec $CMD; fi'",
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S ${PHP_HOST:-0.0.0.0}:${PHP_PORT:-8080} -t public"
+        ],
         "test": "pest",
         "analyse": "phpstan analyse --no-progress",
         "lint": "php-cs-fixer fix --dry-run --diff",

@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 // Dev-server only: let the built-in web server serve real files from
 // public/dist/ natively. Apache and FrankenPHP already do this in prod.
 if (PHP_SAPI === 'cli-server') {
-    $file = __DIR__ . '/dist' . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
+    // Decode percent-encoded characters so paths like /foo%20bar.svg
+    // resolve to the actual file on disk.
+    $file = __DIR__ . '/dist' . urldecode($requestPath);
     if (is_file($file)) {
         return false;
     }

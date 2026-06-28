@@ -24,7 +24,10 @@
         }
     },
     "scripts": {
-        "dev": "php -S ${PHP_PORT:-8080} -t public",
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S ${PHP_HOST:-127.0.0.1}:${PHP_PORT:-8080} -t public/dist public/index.php"
+        ],
         "test": "pest",
         "analyse": "phpstan analyse --no-progress",
         "lint": "php-cs-fixer fix --dry-run --diff",

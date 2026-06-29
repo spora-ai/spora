@@ -5,6 +5,13 @@ declare(strict_types=1);
 use Spora\Core\HttpKernel;
 use Symfony\Component\HttpFoundation\Request;
 
+// Resolve BASE_PATH from this entry point's location. Each entry point
+// (public/index.php, bin/spora) is one level below the project root, so
+// dirname(__FILE__, 2) gives the consumer's project root. Required for
+// the framework to construct its Paths service on the first container
+// resolution.
+define('BASE_PATH', dirname(__FILE__, 2));
+
 // Dev-server only: let the built-in web server serve real files from
 // public/dist/ natively. Apache and FrankenPHP already do this in prod.
 if (PHP_SAPI === 'cli-server') {
@@ -17,7 +24,7 @@ if (PHP_SAPI === 'cli-server') {
     }
 }
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once BASE_PATH . '/vendor/autoload.php';
 
 $request = Request::createFromGlobals();
 $path    = $request->getPathInfo();

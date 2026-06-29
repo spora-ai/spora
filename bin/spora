@@ -3,5 +3,10 @@
 
 declare(strict_types=1);
 
-require dirname(__DIR__) . '/vendor/autoload.php';
-require dirname(__DIR__) . '/vendor/spora-ai/spora-core/bin/spora';
+// Entry point: bin/ → consumer root via dirname 2 levels up.
+// The framework's bin/spora (required below) loads vendor/autoload.php.
+define('BASE_PATH', dirname(__FILE__, 2));
+
+require BASE_PATH . '/vendor/spora-ai/spora-core/bin/spora';
+
+

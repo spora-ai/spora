@@ -1,11 +1,7 @@
 /vendor/
 /node_modules/
-/storage/database.sqlite
-/storage/database-backup.sqlite
-/storage/*.log
-/storage/php.log
-/storage/.plugins_stamp
-/storage/spora-worker.lock
+/storage/*
+!storage/.gitkeep
 /coverage/
 /.phpunit.cache/
 /.env

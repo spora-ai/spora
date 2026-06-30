@@ -2571,16 +2571,16 @@
         },
         {
             "name": "spora-ai/spora-core",
-            "version": "v0.4.3",
+            "version": "v0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-core.git",
-                "reference": "550bab2a2d64ef6affd1289db006bfdf346471d0"
+                "reference": "abc91356eacc3a215f616f98e9f0fb156132205f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/550bab2a2d64ef6affd1289db006bfdf346471d0",
-                "reference": "550bab2a2d64ef6affd1289db006bfdf346471d0",
+                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/abc91356eacc3a215f616f98e9f0fb156132205f",
+                "reference": "abc91356eacc3a215f616f98e9f0fb156132205f",
                 "shasum": ""
             },
             "require": {
@@ -2643,22 +2643,22 @@
             "description": "A portable, zero-configuration AI agent orchestration platform that runs on any shared host (cPanel/FTP) without system dependencies beyond PHP 8.4+.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-core/issues",
-                "source": "https://github.com/spora-ai/spora-core/tree/v0.4.3"
+                "source": "https://github.com/spora-ai/spora-core/tree/v0.4.4"
             },
-            "time": "2026-06-29T19:05:56+00:00"
+            "time": "2026-06-30T09:02:48+00:00"
         },
         {
             "name": "spora-ai/spora-frontend",
-            "version": "v0.1.2",
+            "version": "v0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-frontend.git",
-                "reference": "04a34ff0f0d66fbfe9f1bcf49ad3f2620824d9fd"
+                "reference": "a106543e134dca57975fa8f5828bce8b320f0677"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.1.2/spora-frontend-v0.1.2.tar.gz",
-                "reference": "04a34ff0f0d66fbfe9f1bcf49ad3f2620824d9fd"
+                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.1.6/spora-frontend-v0.1.6.tar.gz",
+                "reference": "a106543e134dca57975fa8f5828bce8b320f0677"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -2678,9 +2678,9 @@
             "description": "Spora admin UI — prebuilt assets delivered as a Composer package. Consumed by spora-ai/spora-skeleton via spora-ai/installer.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-frontend/issues",
-                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.1.2"
+                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.1.6"
             },
-            "time": "2026-06-27T08:49:31+00:00"
+            "time": "2026-06-30T11:47:30+00:00"
         },
         {
             "name": "symfony/clock",

@@ -30,13 +30,25 @@ Options -MultiViews
     RewriteEngine On
     RewriteBase /
 
+    # 0. /.well-known/* paths bypass the front controller. Apache
+    #    serves matching files directly (e.g. ACME http-01 challenges);
+    #    non-matching paths fall through to default routing, so a
+    #    standalone Mercure or other reverse-proxy setup can take over.
+    #    Without this, the SPA shell would be served at /.well-known/*,
+    #    which is wrong for any well-known discovery endpoint.
+    RewriteCond %{REQUEST_URI} ^/?\.well-known/
+    RewriteRule ^ - [L]
+
     # 1. Files under /public/ are served directly (assets, favicon, etc.)
     RewriteCond %{REQUEST_URI} ^/?public/ [NC]
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
     # 2. Anything else that exists as a file or directory is denied.
-    #    This is what protects config.php, app/, vendor/, storage/, etc.
+    #    The bare "/" request is excluded — the project root IS a
+    #    directory but the homepage must fall through to the
+    #    front-controller rewrite below, not 403.
+    RewriteCond %{REQUEST_URI} !^/?$ [NC]
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [F,L]

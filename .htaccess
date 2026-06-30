@@ -1,0 +1,58 @@
+# /.htaccess
+#
+# This file is read ONLY when the web server's DocumentRoot is the project
+# root (shared-host fallback). In the canonical setup (Docker, local dev),
+# DocumentRoot is /public/ and this file is never read.
+#
+# The rule is simple: only /public/ is web-accessible. Everything else
+# is denied (or routed to public/index.php if it doesn't exist).
+#
+#   1. Files under /public/ are served directly
+#   2. Anything else that exists is denied with 403
+#   3. Anything else (non-existing paths) routes to public/index.php
+#      — public/index.php then serves the SPA shell (non-/api/*) or the
+#      API (/api/*)
+
+Options -Indexes
+Options -MultiViews
+
+# ─── Security headers (apply when this file is read) ──────────────────────
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ─── Routing & security (the public/ folder is the only public area) ─────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 0. /.well-known/* paths bypass the front controller. Apache
+    #    serves matching files directly (e.g. ACME http-01 challenges);
+    #    non-matching paths fall through to default routing, so a
+    #    standalone Mercure or other reverse-proxy setup can take over.
+    #    Without this, the SPA shell would be served at /.well-known/*,
+    #    which is wrong for any well-known discovery endpoint.
+    RewriteCond %{REQUEST_URI} ^/?\.well-known/
+    RewriteRule ^ - [L]
+
+    # 1. Files under /public/ are served directly (assets, favicon, etc.)
+    RewriteCond %{REQUEST_URI} ^/?public/ [NC]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+
+    # 2. Anything else that exists as a file or directory is denied.
+    #    The bare "/" request is excluded — the project root IS a
+    #    directory but the homepage must fall through to the
+    #    front-controller rewrite below, not 403.
+    RewriteCond %{REQUEST_URI} !^/?$ [NC]
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [F,L]
+
+    # 3. Everything else routes to public/index.php (SPA + API).
+    RewriteRule ^(.*)$ public/index.php [QSA,L]
+</IfModule>

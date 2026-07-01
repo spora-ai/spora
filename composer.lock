@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4bac55d64dd69b23baf205d5f60be52",
+    "content-hash": "62560dfc954f306b3b1746601fc47ebf",
     "packages": [
         {
             "name": "brick/math",
@@ -2571,16 +2571,16 @@
         },
         {
             "name": "spora-ai/spora-core",
-            "version": "v0.5.0",
+            "version": "v0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-core.git",
-                "reference": "93a067fdd5b1d4d6a6b017cf5d29b49ad46f9eb7"
+                "reference": "b8dbb22e02a45214d944bb32a8a6d2094434a850"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/93a067fdd5b1d4d6a6b017cf5d29b49ad46f9eb7",
-                "reference": "93a067fdd5b1d4d6a6b017cf5d29b49ad46f9eb7",
+                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/b8dbb22e02a45214d944bb32a8a6d2094434a850",
+                "reference": "b8dbb22e02a45214d944bb32a8a6d2094434a850",
                 "shasum": ""
             },
             "require": {
@@ -2643,9 +2643,9 @@
             "description": "A portable, zero-configuration AI agent orchestration platform that runs on any shared host (cPanel/FTP) without system dependencies beyond PHP 8.4+.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-core/issues",
-                "source": "https://github.com/spora-ai/spora-core/tree/v0.5.0"
+                "source": "https://github.com/spora-ai/spora-core/tree/v0.5.1"
             },
-            "time": "2026-07-01T09:21:51+00:00"
+            "time": "2026-07-01T10:16:54+00:00"
         },
         {
             "name": "spora-ai/spora-frontend",

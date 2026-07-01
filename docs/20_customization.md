@@ -4,7 +4,7 @@ How to extend a Spora install with custom tools, agents, and recipes.
 
 ## Custom tools
 
-Tools are PHP classes implementing `ToolInterface`. Three ways to ship them:
+Tools are PHP classes implementing `ToolInterface`. Four ways to ship them:
 
 ### 1. As a plugin (recommended for reusable tools)
 
@@ -22,11 +22,40 @@ Edit the generated tool class, commit, tag a release, push to GitHub. Then in yo
 composer require my-vendor/my-tool
 ```
 
-### 2. In-app (for one-off tools)
+### 2. As an App extension (recommended for project-local code)
 
-Drop a PHP class into your project's `app/Tools/` (or any PSR-4 path you autoload), implement `ToolInterface`, and register it via `ToolConfigService`.
+The Symfony-style approach: drop a class in `app/App.php` (shipped with this
+skeleton as a stub) and override any hook. The framework discovers the file
+via reflection — no manifest, no slug, no `composer require`.
 
-### 3. Fork the skeleton
+```php
+// app/App.php
+final class App extends \Spora\Extensions\AbstractExtension
+{
+    public function getName(): string { return 'My Spora App'; }
+
+    public function tools(): array { return [Tools\MyTool::class]; }
+}
+```
+
+**Status:** the App extension surface lands in `spora-ai/spora-core` v0.5.
+The skeleton's `composer.json` currently pins `^0.4` (latest stable) and
+the shipped `app/App.php` is a dormant stub — it does nothing until you
+upgrade to `^0.5` or copy the new framework code over. The
+`phpstan.neon`, `composer lint`, `composer analyse` scripts are wired up
+locally, so when you upgrade, the scaffold is ready to use.
+
+When to migrate App → Plugin: when you need to ship the same code to
+multiple Spora installs. Renaming `App.php` → `Plugin.php` plus a
+`plugin.json` is the entire migration.
+
+Full reference: see [Spora framework docs — `docs/08_app_extension.md`](../vendor/spora-ai/spora-core/docs/08_app_extension.md).
+
+### 3. In-app (for one-off tools)
+
+Drop a PHP class into your project's `app/Tools/` (or any PSR-4 path you autoload), implement `ToolInterface`, and register it via `ToolConfigService`. Prefer the App extension above — this path is for the rare case where you don't want a single App entry-point at all.
+
+### 4. Fork the skeleton
 
 If your customization is tightly coupled to the operator project, fork the skeleton, edit the files in place, and rebuild the Docker image.
 

@@ -1,5 +1,6 @@
 /vendor/
 /node_modules/
+/public/dist
 /storage/*
 !storage/.gitkeep
 /coverage/
@@ -8,4 +9,4 @@
 .env.local
 *.log
 .DS_Store
-/public/dist
+/.php-cs-fixer.cache/

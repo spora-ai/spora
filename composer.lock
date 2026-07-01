@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dce39e07330da1ec0d51e9847585df4d",
+    "content-hash": "83303b462e66fd72d21f44f2a5caf5a1",
     "packages": [
         {
             "name": "brick/math",
@@ -1016,16 +1016,16 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "1dbd2611b2cd025d3526e64bd7670033ff883173"
+                "reference": "8f10727c854250bd7c4c50cd04610722dd3007b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/1dbd2611b2cd025d3526e64bd7670033ff883173",
-                "reference": "1dbd2611b2cd025d3526e64bd7670033ff883173",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/8f10727c854250bd7c4c50cd04610722dd3007b5",
+                "reference": "8f10727c854250bd7c4c50cd04610722dd3007b5",
                 "shasum": ""
             },
             "require": {
@@ -1072,11 +1072,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-05-19T14:10:53+00:00"
+            "time": "2026-06-25T16:46:05+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1122,7 +1122,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -1184,16 +1184,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "0b719e8cac0dcdb021e0ddfee5ef65410fe53000"
+                "reference": "a108b67e086a933e92abebe69bb8e15c1218d3c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/0b719e8cac0dcdb021e0ddfee5ef65410fe53000",
-                "reference": "0b719e8cac0dcdb021e0ddfee5ef65410fe53000",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/a108b67e086a933e92abebe69bb8e15c1218d3c8",
+                "reference": "a108b67e086a933e92abebe69bb8e15c1218d3c8",
                 "shasum": ""
             },
             "require": {
@@ -1228,20 +1228,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-06-22T12:59:19+00:00"
+            "time": "2026-06-25T18:32:48+00:00"
         },
         {
             "name": "illuminate/database",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "e9e3901def42739290761e28fab10e0433a1a07b"
+                "reference": "75aa8e2e2f3c292850c77a3b2392ba5b59fa2930"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/e9e3901def42739290761e28fab10e0433a1a07b",
-                "reference": "e9e3901def42739290761e28fab10e0433a1a07b",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/75aa8e2e2f3c292850c77a3b2392ba5b59fa2930",
+                "reference": "75aa8e2e2f3c292850c77a3b2392ba5b59fa2930",
                 "shasum": ""
             },
             "require": {
@@ -1301,11 +1301,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-06-22T14:01:12+00:00"
+            "time": "2026-06-26T18:33:01+00:00"
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -1372,7 +1372,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1418,16 +1418,16 @@
         },
         {
             "name": "illuminate/pagination",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
-                "reference": "0e788e59a857f4c6fd6f084fc4848714c8cd5bbb"
+                "reference": "20f10920affbea754c374c0eea99b17256c41573"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/pagination/zipball/0e788e59a857f4c6fd6f084fc4848714c8cd5bbb",
-                "reference": "0e788e59a857f4c6fd6f084fc4848714c8cd5bbb",
+                "url": "https://api.github.com/repos/illuminate/pagination/zipball/20f10920affbea754c374c0eea99b17256c41573",
+                "reference": "20f10920affbea754c374c0eea99b17256c41573",
                 "shasum": ""
             },
             "require": {
@@ -1464,11 +1464,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-05-13T14:00:22+00:00"
+            "time": "2026-06-25T16:46:05+00:00"
         },
         {
             "name": "illuminate/reflection",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/reflection.git",
@@ -1519,16 +1519,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v13.17.0",
+            "version": "v13.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "0e8c393be2fb6163be35b4a738075bf76444c246"
+                "reference": "2be3f10e603d0503d33c6d91c9f6484640b5a8ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/0e8c393be2fb6163be35b4a738075bf76444c246",
-                "reference": "0e8c393be2fb6163be35b4a738075bf76444c246",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/2be3f10e603d0503d33c6d91c9f6484640b5a8ac",
+                "reference": "2be3f10e603d0503d33c6d91c9f6484640b5a8ac",
                 "shasum": ""
             },
             "require": {
@@ -1594,7 +1594,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-06-21T21:14:09+00:00"
+            "time": "2026-06-28T16:54:25+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -2571,16 +2571,16 @@
         },
         {
             "name": "spora-ai/spora-core",
-            "version": "v0.4.4",
+            "version": "v0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-core.git",
-                "reference": "abc91356eacc3a215f616f98e9f0fb156132205f"
+                "reference": "7c9a1c87ca0c3d77203cab06782bd6de741fd06d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/abc91356eacc3a215f616f98e9f0fb156132205f",
-                "reference": "abc91356eacc3a215f616f98e9f0fb156132205f",
+                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/7c9a1c87ca0c3d77203cab06782bd6de741fd06d",
+                "reference": "7c9a1c87ca0c3d77203cab06782bd6de741fd06d",
                 "shasum": ""
             },
             "require": {
@@ -2643,22 +2643,22 @@
             "description": "A portable, zero-configuration AI agent orchestration platform that runs on any shared host (cPanel/FTP) without system dependencies beyond PHP 8.4+.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-core/issues",
-                "source": "https://github.com/spora-ai/spora-core/tree/v0.4.4"
+                "source": "https://github.com/spora-ai/spora-core/tree/v0.5.2"
             },
-            "time": "2026-06-30T09:02:48+00:00"
+            "time": "2026-07-01T11:07:58+00:00"
         },
         {
             "name": "spora-ai/spora-frontend",
-            "version": "v0.1.6",
+            "version": "v0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-frontend.git",
-                "reference": "a106543e134dca57975fa8f5828bce8b320f0677"
+                "reference": "c73753b3248bea5d2808caaba5df3e5961be4334"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.1.6/spora-frontend-v0.1.6.tar.gz",
-                "reference": "a106543e134dca57975fa8f5828bce8b320f0677"
+                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.1.8/spora-frontend-v0.1.8.tar.gz",
+                "reference": "c73753b3248bea5d2808caaba5df3e5961be4334"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -2678,9 +2678,9 @@
             "description": "Spora admin UI — prebuilt assets delivered as a Composer package. Consumed by spora-ai/spora-skeleton via spora-ai/installer.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-frontend/issues",
-                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.1.6"
+                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.1.8"
             },
-            "time": "2026-06-30T11:47:30+00:00"
+            "time": "2026-07-01T09:39:01+00:00"
         },
         {
             "name": "symfony/clock",
@@ -8865,6 +8865,53 @@
                 }
             ],
             "time": "2025-02-07T05:00:38+00:00"
+        },
+        {
+            "name": "spora-ai/spora-maker",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spora-ai/spora-maker.git",
+                "reference": "07a138165f668143aa312ffddcfa7c569b7bf310"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spora-ai/spora-maker/zipball/07a138165f668143aa312ffddcfa7c569b7bf310",
+                "reference": "07a138165f668143aa312ffddcfa7c569b7bf310",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.4",
+                "spora-ai/spora-core": "*",
+                "symfony/console": "^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "pestphp/pest": "^4.0",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spora\\Maker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Scaffolder for the Spora project App — generates Tools, Controllers, and the App.php entry class. Inspired by Symfony's MakerBundle. Install as a require-dev dep.",
+            "support": {
+                "issues": "https://github.com/spora-ai/spora-maker/issues",
+                "source": "https://github.com/spora-ai/spora-maker/tree/0.1.0"
+            },
+            "time": "2026-07-01T08:28:22+00:00"
         },
         {
             "name": "staabm/side-effects-detector",

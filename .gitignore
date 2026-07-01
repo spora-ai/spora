@@ -3,6 +3,8 @@
 /public/dist
 /storage/*
 !storage/.gitkeep
+/plugins/*
+!plugins/.gitkeep
 /coverage/
 /.phpunit.cache/
 /.env

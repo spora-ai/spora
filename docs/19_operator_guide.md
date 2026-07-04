@@ -21,16 +21,18 @@ Install plugins via the admin UI at `/apps/plugins` (admin role required). The U
 SPORA_PLUGIN_INSTALL_ENABLED=true
 ```
 
-Or via CLI:
+Or via CLI. Package names follow the `spora-ai/spora-plugin-<name>` pattern; pin a constraint with `--constraint=^<major>.<minor>`:
 
 ```bash
-php bin/spora spora:plugin:install spora-ai/spora-plugin-tavily
+php bin/spora spora:plugin:install spora-ai/spora-plugin-tavily --constraint=^0.2
 php bin/spora spora:plugin:list
 php bin/spora spora:plugin:uninstall spora-ai/spora-plugin-tavily
 php bin/spora spora:plugin:update spora-ai/spora-plugin-tavily
 ```
 
 Plugins land in `plugins/<name>/` (routed by `spora-ai/installer`). Each plugin owns its own migrations, tools, and assets.
+
+The Web UI install path (`POST /api/v1/plugins`, request/response shapes, idempotency rules, error codes) is documented in the framework release that ships with v0.6.1: see [plugin install API](https://github.com/spora-ai/spora-core/blob/main/docs/20_plugin_install_api.md).
 
 ## Updating the framework
 

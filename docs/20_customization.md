@@ -16,11 +16,13 @@ composer create-project sspa-ai/spora-plugin-skeleton my-tool
 # Or clone: git clone https://github.com/spora-ai/spora-plugin-skeleton my-tool
 ```
 
-Edit the generated tool class, commit, tag a release, push to GitHub. Then in your operator install:
+Edit the generated tool class, commit, tag a release, push to GitHub. Then in your operator install, prefer the CLI install command (it handles routing + caches + migrations in one step):
 
 ```bash
-composer require my-vendor/my-tool
+php bin/spora spora:plugin:install my-vendor/my-tool --constraint=^0.1
 ```
+
+`composer require` also works (the `spora-ai/installer` Composer plugin routes `spora-plugin`-typed packages into `plugins/<name>/`), but the CLI path is the operator-facing canonical install. See [Spora framework docs — plugin author guide](../vendor/spora-ai/spora-core/docs/18_plugin_author_guide.md) for the plugin package shape and `type: spora-plugin` requirement.
 
 ### 2. As an App extension (recommended for project-local code)
 

@@ -12,3 +12,4 @@
 *.log
 .DS_Store
 /.php-cs-fixer.cache/
+/.worktrees/

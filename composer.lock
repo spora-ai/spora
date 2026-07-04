@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "83303b462e66fd72d21f44f2a5caf5a1",
+    "content-hash": "fd455cc8997017a8bcdc9031ecfec29e",
     "packages": [
         {
             "name": "brick/math",
@@ -332,55 +332,6 @@
                 }
             ],
             "time": "2024-06-24T20:46:46+00:00"
-        },
-        {
-            "name": "craigk5n/php-icalendar-core",
-            "version": "1.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/craigk5n/php-icalendar-core.git",
-                "reference": "5dcfc2b6fb940322312fb0884f000ff574058e17"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/craigk5n/php-icalendar-core/zipball/5dcfc2b6fb940322312fb0884f000ff574058e17",
-                "reference": "5dcfc2b6fb940322312fb0884f000ff574058e17",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2"
-            },
-            "require-dev": {
-                "infection/infection": "^0.29",
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^10.0",
-                "vimeo/psalm": "^5.0 || ^6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Icalendar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "RFC 5545 compliant PHP library for iCalendar parsing and writing",
-            "homepage": "https://github.com/craigk5n/php-icalendar-core",
-            "keywords": [
-                "calendar",
-                "iCalendar",
-                "ics",
-                "parser",
-                "rfc5545",
-                "writer"
-            ],
-            "support": {
-                "issues": "https://github.com/craigk5n/php-icalendar-core/issues",
-                "source": "https://github.com/craigk5n/php-icalendar-core"
-            },
-            "time": "2026-02-27T05:24:31+00:00"
         },
         {
             "name": "delight-im/auth",
@@ -1016,7 +967,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -1076,7 +1027,7 @@
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1122,7 +1073,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -1184,7 +1135,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1232,7 +1183,7 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
@@ -1305,7 +1256,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -1372,7 +1323,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1418,7 +1369,7 @@
         },
         {
             "name": "illuminate/pagination",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
@@ -1468,7 +1419,7 @@
         },
         {
             "name": "illuminate/reflection",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/reflection.git",
@@ -1519,16 +1470,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v13.18.0",
+            "version": "v13.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "2be3f10e603d0503d33c6d91c9f6484640b5a8ac"
+                "reference": "06bffd844a3ac5671b7933b37b67d6e16e57f1af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/2be3f10e603d0503d33c6d91c9f6484640b5a8ac",
-                "reference": "2be3f10e603d0503d33c6d91c9f6484640b5a8ac",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/06bffd844a3ac5671b7933b37b67d6e16e57f1af",
+                "reference": "06bffd844a3ac5671b7933b37b67d6e16e57f1af",
                 "shasum": ""
             },
             "require": {
@@ -1594,7 +1545,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-06-28T16:54:25+00:00"
+            "time": "2026-07-01T18:20:12+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -2571,21 +2522,20 @@
         },
         {
             "name": "spora-ai/spora-core",
-            "version": "v0.5.2",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-core.git",
-                "reference": "7c9a1c87ca0c3d77203cab06782bd6de741fd06d"
+                "reference": "fe15c4383cdf841a65b27c298b2971007065b2a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/7c9a1c87ca0c3d77203cab06782bd6de741fd06d",
-                "reference": "7c9a1c87ca0c3d77203cab06782bd6de741fd06d",
+                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/fe15c4383cdf841a65b27c298b2971007065b2a3",
+                "reference": "fe15c4383cdf841a65b27c298b2971007065b2a3",
                 "shasum": ""
             },
             "require": {
                 "chriskonnertz/string-calc": "^2.0",
-                "craigk5n/php-icalendar-core": "^1.0",
                 "delight-im/auth": "^9.0",
                 "dragonmantank/cron-expression": "^3.6",
                 "ext-curl": "*",
@@ -2603,6 +2553,7 @@
                 "ext-zip": "*",
                 "illuminate/database": "^13.0",
                 "illuminate/filesystem": "^13.0",
+                "illuminate/pagination": "^13.0",
                 "league/html-to-markdown": "^5.1",
                 "monolog/monolog": "^3.10",
                 "nikic/fast-route": "^1.3",
@@ -2616,8 +2567,7 @@
                 "symfony/mailer": "^8.0",
                 "symfony/process": "^8.0",
                 "symfony/yaml": "^8.0",
-                "vlucas/phpdotenv": "^5.6",
-                "webklex/php-imap": "^6.2"
+                "vlucas/phpdotenv": "^5.6"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.94",
@@ -2643,22 +2593,22 @@
             "description": "A portable, zero-configuration AI agent orchestration platform that runs on any shared host (cPanel/FTP) without system dependencies beyond PHP 8.4+.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-core/issues",
-                "source": "https://github.com/spora-ai/spora-core/tree/v0.5.2"
+                "source": "https://github.com/spora-ai/spora-core/tree/v0.6.1"
             },
-            "time": "2026-07-01T11:07:58+00:00"
+            "time": "2026-07-04T09:06:28+00:00"
         },
         {
             "name": "spora-ai/spora-frontend",
-            "version": "v0.1.8",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-frontend.git",
-                "reference": "c73753b3248bea5d2808caaba5df3e5961be4334"
+                "reference": "3568e4b6c071804af729473a0023518f8536bc07"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.1.8/spora-frontend-v0.1.8.tar.gz",
-                "reference": "c73753b3248bea5d2808caaba5df3e5961be4334"
+                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.2.0/spora-frontend-v0.2.0.tar.gz",
+                "reference": "3568e4b6c071804af729473a0023518f8536bc07"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -2678,9 +2628,9 @@
             "description": "Spora admin UI — prebuilt assets delivered as a Composer package. Consumed by spora-ai/spora-skeleton via spora-ai/installer.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-frontend/issues",
-                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.1.8"
+                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.2.0"
             },
-            "time": "2026-07-01T09:39:01+00:00"
+            "time": "2026-07-03T20:16:25+00:00"
         },
         {
             "name": "symfony/clock",
@@ -4986,87 +4936,6 @@
                 }
             ],
             "time": "2026-04-26T05:33:54+00:00"
-        },
-        {
-            "name": "webklex/php-imap",
-            "version": "6.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Webklex/php-imap.git",
-                "reference": "6b8ef85d621bbbaf52741b00cca8e9237e2b2e05"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Webklex/php-imap/zipball/6b8ef85d621bbbaf52741b00cca8e9237e2b2e05",
-                "reference": "6b8ef85d621bbbaf52741b00cca8e9237e2b2e05",
-                "shasum": ""
-            },
-            "require": {
-                "ext-fileinfo": "*",
-                "ext-iconv": "*",
-                "ext-json": "*",
-                "ext-libxml": "*",
-                "ext-mbstring": "*",
-                "ext-openssl": "*",
-                "ext-zip": "*",
-                "illuminate/pagination": ">=5.0.0",
-                "nesbot/carbon": "^2.62.1|^3.2.4",
-                "php": "^8.0.2",
-                "symfony/http-foundation": ">=2.8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5.10"
-            },
-            "suggest": {
-                "symfony/mime": "Recomended for better extension support",
-                "symfony/var-dumper": "Usefull tool for debugging"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "6.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webklex\\PHPIMAP\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malte Goldenbaum",
-                    "email": "github@webklex.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP IMAP client",
-            "homepage": "https://github.com/webklex/php-imap",
-            "keywords": [
-                "imap",
-                "mail",
-                "php-imap",
-                "pop3",
-                "webklex"
-            ],
-            "support": {
-                "issues": "https://github.com/Webklex/php-imap/issues",
-                "source": "https://github.com/Webklex/php-imap/tree/6.2.0"
-            },
-            "funding": [
-                {
-                    "url": "https://www.buymeacoffee.com/webklex",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://ko-fi.com/webklex",
-                    "type": "ko_fi"
-                }
-            ],
-            "time": "2025-04-25T06:02:37+00:00"
         }
     ],
     "packages-dev": [

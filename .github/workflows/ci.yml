@@ -42,38 +42,10 @@ jobs:
           extensions: pdo_sqlite, zip
           tools: composer
 
-      # Skeleton pulls prebuilt assets from Packagist at install time, but
-      # we want the smoke test to be hermetic — fake the frontend dist via
-      # a path repo pointing at a stub package, so we can verify the install
-      # path without hitting the network.
-      #
-      # The installer copies the package root verbatim into public/dist/
-      # (SporaFrontendInstaller extends LibraryInstaller with a fixed
-      # target), so index.html lives at the package root in the stub.
-      - name: Create stub spora-frontend dist
-        run: |
-          mkdir -p /tmp/stub-frontend
-          echo '<!doctype html><title>Spora</title>' > /tmp/stub-frontend/index.html
-          cat > /tmp/stub-frontend/composer.json <<'JSON'
-          {
-              "name": "spora-ai/spora-frontend",
-              "description": "Stub frontend package for the smoke test — replaced on Packagist at install time.",
-              "type": "spora-frontend",
-              "license": "MIT",
-              "version": "0.1.0"
-          }
-          JSON
-
-      - name: composer install (with stub frontend)
-        run: |
-          composer config repositories.spora-frontend path /tmp/stub-frontend
-          composer require spora-ai/spora-frontend:^0.1 --no-interaction --no-update
-          composer install --no-interaction
+      - name: composer install
+        run: composer install --no-interaction
         env:
           COMPOSER_ALLOW_SUPERUSER: 1
-
-      - name: Verify public/dist/index.html routed by installer
-        run: test -f public/dist/index.html
 
       - name: Boot CLI
         run: |

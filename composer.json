@@ -5,9 +5,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.4.1",
-        "spora-ai/spora-core": "^0.5.2",
-        "spora-ai/spora-frontend": "^0.1",
-        "spora-ai/installer": "^1.2"
+        "spora-ai/installer": "^1.2",
+        "spora-ai/spora-core": "^0.6.1",
+        "spora-ai/spora-frontend": "^0.2"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",

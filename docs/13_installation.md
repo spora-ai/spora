@@ -75,6 +75,18 @@ docker compose -f docker/docker-compose.yml up
 
 The image runs FrankenPHP + supervisord. The prebuilt admin UI is baked in via the `spora-frontend` Composer package (no Node toolchain in the image).
 
+## After upgrading to v0.6.1
+
+`spora-ai/spora-core` v0.6.1 extracted the third-party tools (web search, calendar, email, etc.) into separate plugins. Upgrading from v0.6.x to v0.6.1 leaves you with an empty toolbox until you install the plugins you actually need. Pick the ones you want:
+
+```bash
+php bin/spora spora:plugin:install spora-ai/spora-plugin-tavily   # web search
+php bin/spora spora:plugin:install spora-ai/spora-plugin-calendar # CalDAV
+php bin/spora spora:plugin:install spora-ai/spora-plugin-email    # IMAP/SMTP
+```
+
+Plugin list and updates: see `docs/19_operator_guide.md`.
+
 ## Troubleshooting
 
 **`public/dist/index.html is missing` after `php bin/spora spora:install`**

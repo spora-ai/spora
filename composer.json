@@ -5,15 +5,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.4.1",
-        "spora-ai/installer": "^1.2",
-        "spora-ai/spora-core": "^0.6.1",
-        "spora-ai/spora-frontend": "^0.2"
+        "spora-ai/installer": "^1.3",
+        "spora-ai/spora-core": "^0.7",
+        "spora-ai/spora-frontend": "^0.3"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",
         "friendsofphp/php-cs-fixer": "^3.0",
         "pestphp/pest": "^4.0",
-        "spora-ai/spora-maker": "^0.1"
+        "spora-ai/spora-maker": "^0.1.1"
     },
     "autoload": {
         "psr-4": { "App\\": "app/" }

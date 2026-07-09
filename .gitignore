@@ -11,5 +11,5 @@
 .env.local
 *.log
 .DS_Store
-/.php-cs-fixer.cache/
+/.php-cs-fixer.cache
 /.worktrees/

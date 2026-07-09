@@ -1,6 +1,7 @@
 /vendor/
 /node_modules/
 /public/dist
+/public/plugins
 /storage/*
 !storage/.gitkeep
 /plugins/*

@@ -51,23 +51,13 @@ COPY --from=deps-builder /app/vendor /app/vendor
 COPY docker/supervisord.conf /app/supervisord.conf
 COPY docker/frankenphp.conf /app/frankenphp.conf
 
-# Copy and make entrypoint executable, then set up storage permissions in
-# a single layer (S7031).
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/storage/logs \
-    && chown -R www-data:www-data /app/storage /app/public \
+    && chown -R www-data:www-data /app /app/storage /app/public /data /config \
     && chmod -R 775 /app/storage
 
-# Stay as root in the image so the entrypoint can chown the runtime paths
-# (/app, /data, /config) that come from named volumes root-owned. Supervisord
-# runs as root and drops to www-data for its child processes via the
-# `user=www-data` directive in supervisord.conf, so spora-web and
-# spora-worker still run unprivileged — that's the surface SonarCloud's
-# "Image might run with 'root' as the default user" finding cares about.
-# The base image grants frankenphp `cap_net_bind_service` via setcap, so
-# binding 80/443 does not require root for the children either.
-USER root
+USER www-data
 
 EXPOSE 80 443 443/udp
 

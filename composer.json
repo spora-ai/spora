@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.4.1",
         "spora-ai/installer": "^1.3",
-        "spora-ai/spora-core": "^0.7",
+        "spora-ai/spora-core": "^0.8",
         "spora-ai/spora-frontend": "^0.4"
     },
     "require-dev": {

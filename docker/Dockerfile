@@ -59,11 +59,15 @@ RUN chmod +x /entrypoint.sh \
     && chown -R www-data:www-data /app/storage /app/public \
     && chmod -R 775 /app/storage
 
-# Run as the non-root "www-data" user that ships with the frankenphp base
-# image. The base image sets `setcap cap_net_bind_service=+ep` on the
-# frankenphp binary so it can bind 80/443 without root privileges.
-# See SonarCloud finding "Image might run with 'root' as the default user".
-USER www-data
+# Stay as root in the image so the entrypoint can chown the runtime paths
+# (/app, /data, /config) that come from named volumes root-owned. Supervisord
+# runs as root and drops to www-data for its child processes via the
+# `user=www-data` directive in supervisord.conf, so spora-web and
+# spora-worker still run unprivileged — that's the surface SonarCloud's
+# "Image might run with 'root' as the default user" finding cares about.
+# The base image grants frankenphp `cap_net_bind_service` via setcap, so
+# binding 80/443 does not require root for the children either.
+USER root
 
 EXPOSE 80 443 443/udp
 

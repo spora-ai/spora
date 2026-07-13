@@ -30,7 +30,7 @@
     "scripts": {
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "php -S ${PHP_HOST:-127.0.0.1}:${PHP_PORT:-8080} -t public/dist public/index.php"
+            "php -S ${PHP_HOST:-127.0.0.1}:${PHP_PORT:-8080} -t public public/index.php"
         ],
         "test": "pest",
         "analyse": "phpstan analyse --no-progress",

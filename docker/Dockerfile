@@ -51,18 +51,12 @@ COPY --from=deps-builder /app/vendor /app/vendor
 COPY docker/supervisord.conf /app/supervisord.conf
 COPY docker/frankenphp.conf /app/frankenphp.conf
 
-# Copy and make entrypoint executable, then set up storage permissions in
-# a single layer (S7031).
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/storage/logs \
-    && chown -R www-data:www-data /app/storage /app/public \
+    && chown -R www-data:www-data /app /app/storage /app/public /data /config \
     && chmod -R 775 /app/storage
 
-# Run as the non-root "www-data" user that ships with the frankenphp base
-# image. The base image sets `setcap cap_net_bind_service=+ep` on the
-# frankenphp binary so it can bind 80/443 without root privileges.
-# See SonarCloud finding "Image might run with 'root' as the default user".
 USER www-data
 
 EXPOSE 80 443 443/udp

@@ -18,7 +18,8 @@ if ($path === '/' || $path === '') {
     return;
 }
 
-// /spora SPA fallback; web server serves real /spora/* files.
+// /spora SPA fallback (Apache/dev server have no try_files equivalent;
+// FrankenPHP's try_files handles it before this fires).
 if ($path === '/spora') {
     header('Location: /spora/', true, 301);
     return;
@@ -33,11 +34,7 @@ if (str_starts_with($path, '/spora/')) {
     return;
 }
 
-// Plugin 404 (don't leak host SPA shell).
-if (str_starts_with($path, '/plugins/')) {
-    http_response_code(404);
-    return;
-}
-
+// Everything else — /api/* and operator-owned paths — falls
+// through to HttpKernel, which returns its own 404 for unmatched paths.
 $kernel = new HttpKernel();
 $kernel->handle($request)->send();

@@ -5,7 +5,7 @@ A Bedrock-style operator template for [Spora](https://github.com/spora-ai/spora-
 This is what operators `composer create-project` to spin up their own Spora instance on a shared host (cPanel/FTP, VPS, Docker, Kubernetes). It pulls:
 
 - **`spora-ai/spora-core`** — the framework (PHP, plugins, agents, recipes, drivers).
-- **`spora-ai/spora-frontend`** — the prebuilt Vue admin UI (delivered as a Composer package, routed to `public/dist/`).
+- **`spora-ai/spora-frontend`** — the prebuilt Vue admin UI (delivered as a Composer package, served from `/spora/`).
 - **`spora-ai/installer`** — the Composer plugin that handles `spora-plugin` and `spora-frontend` package routing.
 
 ## Quick start
@@ -25,11 +25,11 @@ php bin/spora db:seed
 
 # Start the dev server:
 composer dev
-# → PHP on http://localhost:8080 (UI served from public/dist/)
+# → PHP on http://localhost:8080 (UI served from /spora/ — the SPA, not at the root)
 # → Vite on http://localhost:5173 only if you installed spora-frontend via path repo
 ```
 
-Open <http://localhost:8080> in a browser. Log in with the seeded admin credentials (printed by `db:seed`).
+Open <http://localhost:8080> in a browser. Log in with the seeded admin credentials (printed by `db:seed`). The root `/` 301-redirects to `/spora/`; to put your own landing page at `/`, drop `public/index.html` (served by the web server before PHP runs).
 
 ## Documentation
 
@@ -58,7 +58,7 @@ composer install
 composer dev   # now starts Vite with HMR
 ```
 
-The skeleton's `bin/dev` auto-detects path installs and starts Vite from `vendor/spora-ai/spora-frontend/`. On dist installs, Vite is skipped — the UI is served as static assets from `public/dist/`.
+The skeleton's `bin/dev` auto-detects path installs and starts Vite from `vendor/spora-ai/spora-frontend/`. On tarball installs, Vite is skipped — the UI is served as static assets from `public/spora/` under the `/spora/*` URL prefix.
 
 ## License
 

@@ -2,8 +2,8 @@
 
 # ── Stage 1: PHP dependencies via Composer ───────────────────────────────────
 # The frontend is NOT built here — it ships as a prebuilt Composer package
-# (spora-ai/spora-frontend, type: spora-frontend). spora-ai/installer ^1.2
-# routes it into public/dist/ during `composer install`. No Node toolchain
+# (spora-ai/spora-frontend, type: spora-frontend). spora-ai/installer ^1.4
+# routes it into public/spora/ during `composer install`. No Node toolchain
 # is needed in this image.
 
 FROM composer:2.8 AS deps-builder

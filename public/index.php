@@ -3,79 +3,88 @@
 declare(strict_types=1);
 
 use Spora\Core\HttpKernel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mime\MimeTypes;
 
 // Entry point: public/ → consumer root via dirname 2 levels up.
 define('BASE_PATH', dirname(__FILE__, 2));
 
-// Dev-server only: serve real files natively. Apache and FrankenPHP
-// already do this in prod (root * /app/public in docker/frankenphp.conf).
-// Two on-disk trees hold the static files this app serves:
-//   public/dist/    — host SPA bundles (hashed assets under /assets/, favicon, etc.)
-//   public/plugins/ — spora-plugin-frontend packages routed by spora-installer
-// URL `/plugins/<slug>/<path>` is an identity mapping to the on-disk
-// `public/plugins/<slug>/<path>`; everything else under public/dist/ has
-// the URL prepended with `/dist` to find the bundled SPA files.
-// We can't just `return false` and let PHP's built-in dev server serve
-// the file — it only handles files inside its doc root, and `/dist/*`
-// lives outside when the doc root is `public/`. We `readfile()` and
-// `return true` so PHP uses our streamed bytes as the response.
-// Anything else falls through to PHP routing (API or SPA index).
-if (PHP_SAPI === 'cli-server') {
-    $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
-    $decoded     = urldecode($requestPath);
-    if ($decoded !== '/' && str_starts_with($decoded, '/')) {
-        // Pin the public/ root once per request. `realpath()` collapses
-        // any symlinks on the way to __DIR__ so the prefix check below
-        // is a literal byte comparison against the resolved root — no
-        // chance of a `/../` or symlink escape serving files outside
-        // public/.
-        $publicRoot = realpath(__DIR__);
-        $candidates = [__DIR__ . $decoded, __DIR__ . '/dist' . $decoded];
-        foreach ($candidates as $candidate) {
-            // Resolve through `..` segments and symlinks; reject anything
-            // that ends up outside $publicRoot before we ever call
-            // readfile().
-            $resolved = realpath($candidate);
-            if ($resolved === false) {
-                continue;
-            }
-            if (!str_starts_with($resolved, $publicRoot . DIRECTORY_SEPARATOR)) {
-                continue;
-            }
-            if (!is_file($resolved)) {
-                continue;
-            }
-            $ext = strtolower(pathinfo($resolved, PATHINFO_EXTENSION));
-            $mime = match ($ext) {
-                'js', 'mjs'  => 'application/javascript',
-                'css'         => 'text/css; charset=UTF-8',
-                'svg'         => 'image/svg+xml',
-                'json'        => 'application/json',
-                'html'        => 'text/html; charset=UTF-8',
-                'png', 'jpg', 'jpeg', 'gif', 'webp', 'ico' => 'image/' . ($ext === 'svg' ? 'svg+xml' : $ext),
-                default       => 'application/octet-stream',
-            };
-            header("Content-Type: $mime");
-            readfile($resolved);
-            return true;
-        }
-    }
-}
-
 require_once BASE_PATH . '/vendor/autoload.php';
+
+/**
+ * Stream a file from /public/* with auto-detected MIME. Returns true on
+ * success; false if the path resolves outside /public or isn't a regular
+ * file. realpath() collapses `..` segments and symlinks; the prefix
+ * check guards against traversal escaping.
+ */
+function servePublicFile(string $absPath): bool
+{
+    $resolved = realpath($absPath);
+    $root     = realpath(__DIR__);
+    if ($resolved === false
+        || $root === false
+        || !str_starts_with($resolved, $root . DIRECTORY_SEPARATOR)
+        || !is_file($resolved)
+    ) {
+        return false;
+    }
+    (new BinaryFileResponse(
+        $resolved,
+        200,
+        ['Content-Type' => MimeTypes::getDefault()->guessMimeType($resolved) ?? 'application/octet-stream'],
+    ))->prepare(Request::createFromGlobals())->send();
+
+    return true;
+}
 
 $request = Request::createFromGlobals();
 $path    = $request->getPathInfo();
 
-// SPA — serve dist/index.html for non-API routes.
-if (!str_starts_with($path, '/api/') && file_exists(__DIR__ . '/dist/index.html')) {
-    header('Content-Type: text/html; charset=UTF-8');
-    readfile(__DIR__ . '/dist/index.html');
+// / → /spora/ by default. Operators can disable this redirect by
+// removing the block, or by dropping public/index.html (web servers
+// serve real files before invoking PHP).
+if ($path === '/' || $path === '') {
+    header('Location: /spora/', true, 301);
     return;
 }
 
-// API — delegate to the framework.
-$kernel   = new HttpKernel();
-$response = $kernel->handle($request);
-$response->send();
+// Spora admin UI: /spora → /spora/ 301; real files served as-is;
+// everything else falls back to /spora/index.html so the SPA router
+// can handle the path. `strlen($path) === 5 || $path[5] === '/'`
+// guards against `/sporafoo` accidentally resolving into this branch.
+if ($path === '/spora') {
+    header('Location: /spora/', true, 301);
+    return;
+}
+if (str_starts_with($path, '/spora') && (strlen($path) === 5 || $path[5] === '/')) {
+    $inner = $path === '/spora/' ? '/index.html' : substr($path, 5);
+    if (servePublicFile(__DIR__ . '/spora' . $inner)) {
+        return;
+    }
+    if (is_file(__DIR__ . '/spora/index.html')) {
+        (new BinaryFileResponse(__DIR__ . '/spora/index.html', 200,
+            ['Content-Type' => 'text/html; charset=UTF-8']))->prepare($request)->send();
+        return;
+    }
+    http_response_code(404);
+    return;
+}
+
+// Plugin frontends: identity-mapped to public/plugins/<slug>/<path>.
+// Plugin bundles ship one main.js; non-asset paths 404 instead of
+// leaking the host SPA shell.
+if (str_starts_with($path, '/plugins/')) {
+    if (servePublicFile(__DIR__ . $path)) {
+        return;
+    }
+    http_response_code(404);
+    return;
+}
+
+// Everything else — /api/* (incl. /api/health) and the operator's
+// reserved paths — flows through the framework. Operators extend
+// public/index.php above this line, or drop static files in public/
+// for the web server to serve directly.
+$kernel = new HttpKernel();
+$kernel->handle($request)->send();

@@ -1,6 +1,6 @@
 /vendor/
 /node_modules/
-/public/dist
+/public/spora
 /public/plugins
 /storage/*
 !storage/.gitkeep

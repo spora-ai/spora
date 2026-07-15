@@ -9,6 +9,8 @@ define('BASE_PATH', dirname(__FILE__, 2));
 
 require_once BASE_PATH . '/vendor/autoload.php';
 
+const SPA_INDEX_PATH = __DIR__ . '/spora/index.html';
+
 // Raw path for routing decisions (the dev server strips /spora from
 // PATH_INFO when public/spora/index.html exists, so getPathInfo()
 // alone isn't reliable under php -S).
@@ -33,9 +35,9 @@ if (PHP_SAPI === 'cli-server' && str_starts_with($rawPath, '/spora/')) {
 
 // /spora SPA fallback for vue-router client routes (no real file).
 if ($rawPath === '/spora' || str_starts_with($rawPath, '/spora/')) {
-    if (is_file(__DIR__ . '/spora/index.html')) {
+    if (is_file(SPA_INDEX_PATH)) {
         header('Content-Type: text/html; charset=UTF-8');
-        readfile(__DIR__ . '/spora/index.html');
+        readfile(SPA_INDEX_PATH);
         return;
     }
     http_response_code(404);

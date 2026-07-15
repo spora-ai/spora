@@ -6,7 +6,8 @@ FROM composer:2.8 AS deps-builder
 
 WORKDIR /app
 
-# Platform check needs pdo_mysql present.
+# composer.json requires ext-pdo_mysql; install it here so the
+# platform check during `composer install` doesn't abort.
 RUN docker-php-ext-install pdo_mysql
 
 COPY composer.json composer.lock* ./
@@ -29,6 +30,9 @@ COPY app ./app
 COPY bin ./bin
 COPY public ./public
 COPY --from=deps-builder /app/vendor /app/vendor
+# Prebuilt SPA bundle extracted by spora-ai/installer in deps-builder
+# (gitignored in build context, so COPY public ./public above is empty).
+COPY --from=deps-builder /app/public/spora ./public/spora
 COPY docker/supervisord.conf /app/supervisord.conf
 COPY docker/frankenphp.conf /app/frankenphp.conf
 COPY docker/entrypoint.sh /entrypoint.sh

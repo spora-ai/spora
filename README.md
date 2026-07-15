@@ -25,7 +25,7 @@ php bin/spora db:seed
 
 # Start the dev server:
 composer dev
-# → PHP on http://localhost:8080 (UI served from /spora/; the SPA, not the root)
+# → PHP on http://localhost:8080 (UI served from /spora/ — the SPA, not at the root)
 # → Vite on http://localhost:5173 only if you installed spora-frontend via path repo
 ```
 

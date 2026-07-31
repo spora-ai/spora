@@ -33,9 +33,11 @@ Open <http://localhost:8080> in a browser. Log in with the seeded admin credenti
 
 ## Documentation
 
-- [docs/13_installation.md](docs/13_installation.md) — install flows (developer + operator)
-- [docs/19_operator_guide.md](docs/19_operator_guide.md) — shared-host install, plugin management via UI, backups
-- [docs/20_customization.md](docs/20_customization.md) — adding custom tools, agents, recipes
+The Spora documentation lives at <https://docs.spora-ai.com/>.
+
+- [Installation](https://docs.spora-ai.com/start/operators/install) — install flows (developer + operator)
+- [Day-2 operations](https://docs.spora-ai.com/start/operators/operations) — shared-host install, plugin management via UI, backups
+- [Customization](https://docs.spora-ai.com/start/operators/customization) — adding custom tools, agents, recipes
 
 ## Plugin management
 

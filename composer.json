@@ -10,9 +10,9 @@
         "spora-ai/spora-frontend": "^0.9.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan": "^2.1",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "pestphp/pest": "^4.0",
+        "pestphp/pest": "^5.0",
         "spora-ai/spora-maker": "^0.1.1"
     },
     "autoload": {
@@ -42,6 +42,6 @@
         "install:db": "php bin/spora spora:install"
     },
     "extra": {
-        "branch-alias": { "dev-main": "0.1.x-dev" }
+        "branch-alias": { "dev-main": "0.3.x-dev" }
     }
 }

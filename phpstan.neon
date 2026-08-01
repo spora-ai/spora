@@ -4,5 +4,4 @@ parameters:
         - app
     excludePaths:
         - vendor
-        - tests
-    treatPhpDocTypesAsCertain: false
+        - tests (?)

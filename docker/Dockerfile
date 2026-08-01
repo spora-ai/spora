@@ -11,7 +11,8 @@ WORKDIR /app
 RUN docker-php-ext-install pdo_mysql
 
 COPY composer.json composer.lock* ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction \
+    && mkdir -p plugins public/plugins
 
 # Runtime
 FROM dunglas/frankenphp:1-php8.5-bookworm
@@ -30,6 +31,8 @@ COPY app ./app
 COPY bin ./bin
 COPY public ./public
 COPY --from=deps-builder /app/vendor /app/vendor
+COPY --from=deps-builder /app/plugins /app/plugins
+COPY --from=deps-builder /app/public/plugins /app/public/plugins
 # Prebuilt SPA bundle extracted by spora-ai/installer in deps-builder
 # (gitignored in build context, so COPY public ./public above is empty).
 COPY --from=deps-builder /app/public/spora ./public/spora

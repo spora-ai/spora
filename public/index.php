@@ -24,9 +24,12 @@ if ($rawPath === '/' || $rawPath === '') {
     return;
 }
 
-// php -S dev server: return false hands static files under public/spora/
-// back to php -S for serving. FrankenPHP's try_files does this in prod.
-if (PHP_SAPI === 'cli-server' && str_starts_with($rawPath, '/spora/')) {
+// php -S dev server: hand static files under public/spora/ and
+// public/plugins/ back to php -S for serving. FrankenPHP's
+// `php_server` directive does this in prod — see docker/frankenphp.conf.
+// `/plugins/*` is the host SPA's dynamic-import target for plugin
+// IIFE bundles; without it `composer dev` returned the Symfony 404.
+if (PHP_SAPI === 'cli-server' && (str_starts_with($rawPath, '/spora/') || str_starts_with($rawPath, '/plugins/'))) {
     $file = __DIR__ . $rawPath;
     if (is_file($file)) {
         return false;

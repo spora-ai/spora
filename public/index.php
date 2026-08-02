@@ -24,20 +24,11 @@ if ($rawPath === '/' || $rawPath === '') {
     return;
 }
 
-// php -S dev server: return false hands static files under public/spora/
-// and public/plugins/ back to php -S for serving. FrankenPHP's
-// php_server directive handles this in prod via its built-in file
-// server — see docker/frankenphp.conf. We deliberately list the
-// directories explicitly rather than scanning __DIR__ for any match:
-// `/spora/` carries SPA fallback semantics (next branch), and we don't
-// want a stray future directory to start serving arbitrary files
-// without review. The two prefixes below mirror the installer's two
-// public output directories (SporaFrontendInstaller → public/spora/,
-// SporaPluginFrontendInstaller → public/plugins/<slug>/).
-//
-// `/plugins/*` was previously served only in production (FrankenPHP's
-// php_server), so `composer dev` (php -S) returned the Symfony 404 for
-// any IIFE bundle the host SPA tried to dynamic-import.
+// php -S dev server: hand static files under public/spora/ and
+// public/plugins/ back to php -S for serving. FrankenPHP's
+// `php_server` directive does this in prod — see docker/frankenphp.conf.
+// `/plugins/*` is the host SPA's dynamic-import target for plugin
+// IIFE bundles; without it `composer dev` returned the Symfony 404.
 if (PHP_SAPI === 'cli-server' && (str_starts_with($rawPath, '/spora/') || str_starts_with($rawPath, '/plugins/'))) {
     $file = __DIR__ . $rawPath;
     if (is_file($file)) {

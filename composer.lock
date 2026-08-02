@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb51321f016c2ae0275e19fb619af09b",
+    "content-hash": "9e983972d03320430c1e9fc57e4ea69b",
     "packages": [
         {
             "name": "brick/math",
@@ -2634,16 +2634,16 @@
         },
         {
             "name": "spora-ai/spora-core",
-            "version": "v0.13.0",
+            "version": "v0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-core.git",
-                "reference": "c03f26f14440dc17dc918965960dbe95819b13a1"
+                "reference": "e724d9f43d72d5b1e3814ca4fd14699a17b83224"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/c03f26f14440dc17dc918965960dbe95819b13a1",
-                "reference": "c03f26f14440dc17dc918965960dbe95819b13a1",
+                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/e724d9f43d72d5b1e3814ca4fd14699a17b83224",
+                "reference": "e724d9f43d72d5b1e3814ca4fd14699a17b83224",
                 "shasum": ""
             },
             "require": {
@@ -2686,7 +2686,7 @@
                 "friendsofphp/php-cs-fixer": "^3.94",
                 "larastan/larastan": "^3.9",
                 "mockery/mockery": "^1.6",
-                "pestphp/pest": "^4.0",
+                "pestphp/pest": "^5.0",
                 "phpstan/phpstan": "^2.1",
                 "phpstan/phpstan-mockery": "^2.0",
                 "zircote/swagger-php": "^6.4"
@@ -2708,22 +2708,22 @@
             "description": "A portable, zero-configuration AI agent orchestration platform that runs on any shared host (cPanel/FTP) without system dependencies beyond PHP 8.4+.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-core/issues",
-                "source": "https://github.com/spora-ai/spora-core/tree/v0.13.0"
+                "source": "https://github.com/spora-ai/spora-core/tree/v0.14.0"
             },
-            "time": "2026-07-31T11:01:31+00:00"
+            "time": "2026-08-02T09:57:04+00:00"
         },
         {
             "name": "spora-ai/spora-frontend",
-            "version": "v0.9.0",
+            "version": "v0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-frontend.git",
-                "reference": "7e595e57bb894e11174d95fcbcddc8dd2dee787a"
+                "reference": "4d1ed65ed73ef8c24992f09fb8e5847b037d88cf"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.9.0/spora-frontend-v0.9.0.tar.gz",
-                "reference": "7e595e57bb894e11174d95fcbcddc8dd2dee787a"
+                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.10.0/spora-frontend-v0.10.0.tar.gz",
+                "reference": "4d1ed65ed73ef8c24992f09fb8e5847b037d88cf"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -2743,9 +2743,9 @@
             "description": "Spora admin UI — prebuilt assets delivered as a Composer package. Consumed by spora-ai/spora-skeleton via spora-ai/installer.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-frontend/issues",
-                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.9.0"
+                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.10.0"
             },
-            "time": "2026-07-31T11:15:27+00:00"
+            "time": "2026-08-02T08:04:01+00:00"
         },
         {
             "name": "symfony/clock",
@@ -9107,27 +9107,27 @@
         },
         {
             "name": "spora-ai/spora-maker",
-            "version": "0.1.2",
+            "version": "0.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-maker.git",
-                "reference": "d42041a16f1539ce0cc0777d9b4819611d7216ed"
+                "reference": "fd4fc740ac02fdbec4f3eb76df48235ae17406b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-maker/zipball/d42041a16f1539ce0cc0777d9b4819611d7216ed",
-                "reference": "d42041a16f1539ce0cc0777d9b4819611d7216ed",
+                "url": "https://api.github.com/repos/spora-ai/spora-maker/zipball/fd4fc740ac02fdbec4f3eb76df48235ae17406b0",
+                "reference": "fd4fc740ac02fdbec4f3eb76df48235ae17406b0",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.4",
-                "spora-ai/spora-core": "*",
+                "spora-ai/spora-core": ">=0.12.0 <2.0.0",
                 "symfony/console": "^7.0 || ^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "pestphp/pest": "^4.0",
-                "phpstan/phpstan": "^2.0",
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "pestphp/pest": "^5.0",
+                "phpstan/phpstan": "^2.2",
                 "phpstan/phpstan-symfony": "^2.0"
             },
             "type": "library",
@@ -9148,9 +9148,9 @@
             "description": "Scaffolder for the Spora project App — generates Tools, Controllers, and the App.php entry class. Inspired by Symfony's MakerBundle. Install as a require-dev dep.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-maker/issues",
-                "source": "https://github.com/spora-ai/spora-maker/tree/0.1.2"
+                "source": "https://github.com/spora-ai/spora-maker/tree/0.1.4"
             },
-            "time": "2026-07-08T11:46:17+00:00"
+            "time": "2026-08-02T07:46:10+00:00"
         },
         {
             "name": "staabm/side-effects-detector",

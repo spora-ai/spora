@@ -5,8 +5,8 @@ services:
       dockerfile: docker/Dockerfile
     container_name: spora-app
     restart: always
-    # HTTP and HTTPS for production use. Add `-p 8081:80` here for the
-    # local-only path documented in docker/.env.local.example (SERVER_NAME=localhost:80).
+    # For local-only paths, override with `-p 8081:80` and set
+    # SERVER_NAME=localhost:80 in .env.local.
     ports:
       - "80:80"
       - "443:443"

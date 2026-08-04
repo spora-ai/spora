@@ -14,8 +14,8 @@ COPY composer.json composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && mkdir -p plugins public/plugins
 
-# Runtime
-FROM dunglas/frankenphp:1-php8.5-bookworm # NOSONAR docker:S6471 — entrypoint runs as root briefly to chown fresh named volumes, then setpriv drops to www-data for the long-running process tree (see docker/entrypoint.sh and docker/supervisord.conf)
+# NOSONAR docker:S6471 — entrypoint runs as root briefly to chown fresh named volumes, then setpriv drops to www-data for the long-running process tree (see docker/entrypoint.sh and docker/supervisord.conf)
+FROM dunglas/frankenphp:1-php8.5-bookworm
 
 WORKDIR /app
 

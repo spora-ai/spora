@@ -8,6 +8,7 @@ chown -R www-data:www-data /app/storage /data /config 2>/dev/null || true
 echo "Running Spora setup..."
 php /app/bin/spora spora:setup
 
-# Drop privileges here (not in supervisord.conf) so supervisor itself is unprivileged.
-echo "Setup complete. Starting services as www-data..."
-exec gosu www-data /usr/bin/supervisord -c /app/supervisord.conf
+# Drop privileges per-program (in supervisord.conf) so PHP processes run as www-data
+# while supervisor itself keeps root for /dev/stdout logging.
+echo "Setup complete. Starting services..."
+exec /usr/bin/supervisord -c /app/supervisord.conf

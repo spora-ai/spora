@@ -5,9 +5,8 @@ services:
       dockerfile: docker/Dockerfile
     container_name: spora-app
     restart: always
-    # Requires host ports 80 and 443 free (Caddy binds both). For a
-    # local-only sandbox use `docker compose … -p 8081:80` with
-    # SERVER_NAME=localhost:80 (the .env.local.example default).
+    # Requires host ports 80 and 443 free (Caddy binds both). Local sandbox:
+    # `- "8081:80"` + `SERVER_NAME=localhost:80` (see .env.local.example).
     ports:
       - "80:80"
       - "443:443"

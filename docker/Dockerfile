@@ -19,10 +19,9 @@ FROM dunglas/frankenphp:1-php8.5-bookworm
 
 WORKDIR /app
 
-# Slim layer: runtime deps only. `gosu` is the privilege-drop helper used
-# by docker/entrypoint.sh after the one-shot runtime chown of the named
-# volumes — chosen over setpriv for the same reason Postgres / MariaDB /
-# Redis Official Images use it: it exec's the target without a shell layer.
+# Slim runtime layer. `gosu` drops to www-data after the entrypoint's
+# one-shot chown of the named volumes (Postgres / MariaDB / Redis Official
+# Images convention).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends supervisor gosu \
     && docker-php-ext-install pdo_mysql \
@@ -46,12 +45,10 @@ RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/storage/logs \
     && chown -R www-data:www-data /app /app/storage /app/public
 
-# S6470 acknowledged Safe: entrypoint runs as root briefly to chown the
-# /app/storage, /data (Caddy), and /config (Caddy) named volumes on
-# first mount — Docker always creates them root-owned. supervisord (and
-# therefore frankenphp + the worker) is then exec'd as www-data via
-# `gosu`. Same convention as Postgres, Redis, MariaDB Official Images,
-# and every LinuxServer.io image.
+# Sonar S6471 acknowledged Safe: entrypoint chowns the named volumes
+# (/app/storage, /data, /config) then `exec gosu www-data supervisord`.
+# Same pattern as Postgres / MariaDB / Redis Official Images and
+# LinuxServer.io — root phase is brief and non-interactive.
 USER root
 
 EXPOSE 80 443 443/udp

@@ -1,3 +1,24 @@
+# syntax=docker/dockerfile:1
+
+# Composer stage — no Node toolchain; spora-ai/installer routes the
+# prebuilt frontend into public/spora/.
+FROM composer:2.8 AS deps-builder
+
+WORKDIR /app
+
+# composer.json requires ext-pdo_mysql; install it here so the
+# platform check during `composer install` doesn't abort.
+RUN docker-php-ext-install pdo_mysql
+
+COPY composer.json composer.lock* ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction \
+    && mkdir -p plugins public/plugins
+
+# Runtime
+FROM dunglas/frankenphp:1-php8.5-bookworm
+
+WORKDIR /app
+
 # Slim layer: runtime deps only. `gosu` is the privilege-drop helper used
 # by docker/entrypoint.sh after the one-shot runtime chown of the named
 # volumes — chosen over setpriv for the same reason Postgres / MariaDB /

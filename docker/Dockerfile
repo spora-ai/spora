@@ -44,18 +44,16 @@ COPY docker/frankenphp.conf /app/frankenphp.conf
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/storage/logs \
-    && chown -R www-data:www-data /app /app/storage /app/public /data /config \
+    && chown -R www-data:www-data /app /app/storage /app/public \
     && chmod -R 775 /app/storage
 
-# USER is intentionally not set: the entrypoint runs as root so it can
-# chown fresh named volumes (caddy_data, caddy_config) without EPERM, then
-# uses `setpriv` (from util-linux, present in bookworm) to drop privileges
-# for the long-running supervisord / frankenphp / worker. Supervisord's
-# own `user=www-data` (in docker/supervisord.conf) drops further for the
-# frankenphp and worker child processes.
-#
-# This is the standard chown-and-drop pattern; see Traefik's entrypoint
-# for an analogous implementation.
+# Runtime named volumes (/data, /config for Caddy BoltDB and runtime
+# config) are root-owned at first mount — see docker/docker-compose.yml's
+# spora-init service which runs as root once to chown them, then exits.
+# The long-running children (frankenphp, worker) run as www-data
+# via supervisord's `user=` directive in docker/supervisord.conf.
+
+USER www-data
 
 EXPOSE 80 443 443/udp
 

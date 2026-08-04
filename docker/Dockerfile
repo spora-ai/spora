@@ -1,27 +1,9 @@
-# syntax=docker/dockerfile:1
-
-# Composer stage — no Node toolchain; spora-ai/installer routes the
-# prebuilt frontend into public/spora/.
-FROM composer:2.8 AS deps-builder
-
-WORKDIR /app
-
-# composer.json requires ext-pdo_mysql; install it here so the
-# platform check during `composer install` doesn't abort.
-RUN docker-php-ext-install pdo_mysql
-
-COPY composer.json composer.lock* ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction \
-    && mkdir -p plugins public/plugins
-
-# Runtime
-FROM dunglas/frankenphp:1-php8.5-bookworm
-
-WORKDIR /app
-
-# Slim layer: runtime deps only.
+# Slim layer: runtime deps only. `gosu` is the privilege-drop helper used
+# by docker/entrypoint.sh after the one-shot runtime chown of the named
+# volumes — chosen over setpriv for the same reason Postgres / MariaDB /
+# Redis Official Images use it: it exec's the target without a shell layer.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends supervisor \
+    && apt-get install -y --no-install-recommends supervisor gosu \
     && docker-php-ext-install pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 
@@ -41,16 +23,15 @@ COPY docker/frankenphp.conf /app/frankenphp.conf
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/storage/logs \
-    && chown -R www-data:www-data /app /app/storage /app/public \
-    && chmod -R 775 /app/storage
+    && chown -R www-data:www-data /app /app/storage /app/public
 
-# Runtime named volumes (/data, /config for Caddy BoltDB and runtime
-# config) are root-owned at first mount — see docker/docker-compose.yml's
-# spora-init service which runs as root once to chown them, then exits.
-# The long-running children (frankenphp, worker) run as www-data
-# via supervisord's `user=` directive in docker/supervisord.conf.
-
-USER www-data
+# S6470 acknowledged Safe: entrypoint runs as root briefly to chown the
+# /app/storage, /data (Caddy), and /config (Caddy) named volumes on
+# first mount — Docker always creates them root-owned. supervisord (and
+# therefore frankenphp + the worker) is then exec'd as www-data via
+# `gosu`. Same convention as Postgres, Redis, MariaDB Official Images,
+# and every LinuxServer.io image.
+USER root
 
 EXPOSE 80 443 443/udp
 

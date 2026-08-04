@@ -1,25 +1,4 @@
 services:
-  # spora-init runs once as root to chown the named volumes (caddy_data,
-  # caddy_config) that come up root-owned on first mount. After the
-  # first successful run, the volumes are correctly owned and the init
-  # service is a no-op. The main `spora` service runs as www-data (per
-  # `USER www-data` in the Dockerfile) so the long-running process tree
-  # is unprivileged.
-  spora-init:
-    image: alpine:3.19
-    user: root
-    container_name: spora-init
-    restart: "no"
-    volumes:
-      - spora_storage:/app/storage
-      - caddy_data:/data
-      - caddy_config:/config
-    entrypoint: ["/bin/sh", "-c"]
-    command:
-      - |
-        chown -R 33:33 /app/storage /data /config || true
-        echo "spora-init: volume ownership fixed"
-
   spora:
     build:
       context: ..
@@ -27,7 +6,7 @@ services:
     container_name: spora-app
     restart: always
     # Requires host ports 80 and 443 free (Caddy binds both). For a
-    # local-only sandbox use `docker compose -p 8081:80 …` with
+    # local-only sandbox use `docker compose … -p 8081:80` with
     # SERVER_NAME=localhost:80 (the .env.local.example default).
     ports:
       - "80:80"
@@ -36,8 +15,6 @@ services:
     env_file:
       - .env.local
     depends_on:
-      spora-init:
-        condition: service_completed_successfully
       mariadb:
         condition: service_healthy
     healthcheck:

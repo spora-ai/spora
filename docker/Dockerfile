@@ -14,17 +14,14 @@ COPY composer.json composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && mkdir -p plugins public/plugins
 
-# NOSONAR docker:S6471 — entrypoint runs as root briefly to chown fresh named volumes, then setpriv drops to www-data for the long-running process tree (see docker/entrypoint.sh and docker/supervisord.conf)
+# Runtime
 FROM dunglas/frankenphp:1-php8.5-bookworm
 
 WORKDIR /app
 
-# Slim layer: runtime deps only. util-linux ships `setpriv`, used by the
-# entrypoint to drop privileges after the root-phase chown of runtime
-# mounted volumes — pin it explicitly so the entrypoint doesn't depend
-# on transitive deps of supervisor.
+# Slim layer: runtime deps only.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends supervisor util-linux \
+    && apt-get install -y --no-install-recommends supervisor \
     && docker-php-ext-install pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 

@@ -19,9 +19,12 @@ FROM dunglas/frankenphp:1-php8.5-bookworm
 
 WORKDIR /app
 
-# Slim layer: runtime deps only.
+# Slim layer: runtime deps only. util-linux ships `setpriv`, used by the
+# entrypoint to drop privileges after the root-phase chown of runtime
+# mounted volumes — pin it explicitly so the entrypoint doesn't depend
+# on transitive deps of supervisor.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends supervisor \
+    && apt-get install -y --no-install-recommends supervisor util-linux \
     && docker-php-ext-install pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 
@@ -44,7 +47,15 @@ RUN chmod +x /entrypoint.sh \
     && chown -R www-data:www-data /app /app/storage /app/public /data /config \
     && chmod -R 775 /app/storage
 
-USER www-data
+# USER is intentionally not set: the entrypoint runs as root so it can
+# chown fresh named volumes (caddy_data, caddy_config) without EPERM, then
+# uses `setpriv` (from util-linux, present in bookworm) to drop privileges
+# for the long-running supervisord / frankenphp / worker. Supervisord's
+# own `user=www-data` (in docker/supervisord.conf) drops further for the
+# frankenphp and worker child processes.
+#
+# This is the standard chown-and-drop pattern; see Traefik's entrypoint
+# for an analogous implementation.
 
 EXPOSE 80 443 443/udp
 

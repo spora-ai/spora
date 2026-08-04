@@ -5,8 +5,9 @@ services:
       dockerfile: docker/Dockerfile
     container_name: spora-app
     restart: always
-    # For local-only paths, override with `-p 8081:80` and set
-    # SERVER_NAME=localhost:80 in .env.local.
+    # Requires host ports 80 and 443 free (Caddy binds both). For a
+    # local-only sandbox use `docker compose -p 8081:80 …` with
+    # SERVER_NAME=localhost:80 (the .env.local.example default).
     ports:
       - "80:80"
       - "443:443"
@@ -55,6 +56,8 @@ services:
     image: phpmyadmin:latest
     container_name: spora-phpmyadmin
     restart: always
+    # phpMyAdmin has no auth gate beyond MariaDB credentials — remove this
+    # service or firewall 8082 before publishing the stack.
     ports:
       - "8082:80"
     environment:

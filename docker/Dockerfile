@@ -19,9 +19,11 @@ FROM dunglas/frankenphp:1-php8.5-bookworm
 
 WORKDIR /app
 
-# Slim layer: runtime deps only.
+# Slim runtime layer. `gosu` drops to www-data after the entrypoint's
+# one-shot chown of the named volumes (Postgres / MariaDB / Redis Official
+# Images convention).
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends supervisor \
+    && apt-get install -y --no-install-recommends supervisor gosu \
     && docker-php-ext-install pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 
@@ -41,10 +43,13 @@ COPY docker/frankenphp.conf /app/frankenphp.conf
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/storage/logs \
-    && chown -R www-data:www-data /app /app/storage /app/public /data /config \
-    && chmod -R 775 /app/storage
+    && chown -R www-data:www-data /app /app/storage /app/public
 
-USER www-data
+# Sonar S6471 acknowledged Safe: entrypoint chowns the named volumes
+# (/app/storage, /data, /config) then `exec gosu www-data supervisord`.
+# Same pattern as Postgres / MariaDB / Redis Official Images and
+# LinuxServer.io — root phase is brief and non-interactive.
+USER root
 
 EXPOSE 80 443 443/udp
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e983972d03320430c1e9fc57e4ea69b",
+    "content-hash": "65dcac6f18e5603f6153f1c95c59f170",
     "packages": [
         {
             "name": "brick/math",
@@ -3171,6 +3171,48 @@
                 "source": "https://github.com/spora-ai/spora-frontend/tree/v0.10.3"
             },
             "time": "2026-08-06T10:54:37+00:00"
+        },
+        {
+            "name": "spora-ai/spora-plugin-openai-image",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spora-ai/spora-plugin-openai-image.git",
+                "reference": "491494ed840fda03058963e1f87ee1b948eb9e0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spora-ai/spora-plugin-openai-image/zipball/491494ed840fda03058963e1f87ee1b948eb9e0b",
+                "reference": "491494ed840fda03058963e1f87ee1b948eb9e0b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.4.1",
+                "spora-ai/spora-core": ">=0.15.0 <2.0.0 || @dev"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.94",
+                "mockery/mockery": "^1.6",
+                "pestphp/pest": "^4.0",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-mockery": "^2.0"
+            },
+            "type": "spora-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Spora\\Plugins\\OpenAIImage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "OpenAI-compatible image generation for Spora agents.",
+            "support": {
+                "issues": "https://github.com/spora-ai/spora-plugin-openai-image/issues",
+                "source": "https://github.com/spora-ai/spora-plugin-openai-image/tree/v0.2.0"
+            },
+            "time": "2026-08-07T22:31:25+00:00"
         },
         {
             "name": "symfony/clock",

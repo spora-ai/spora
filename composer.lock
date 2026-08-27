@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97365b43edd4adf893339ab5e1dcfb5d",
+    "content-hash": "851384ff13b42a6d7824a90550c4558a",
     "packages": [
         {
             "name": "brick/math",
@@ -3058,16 +3058,16 @@
         },
         {
             "name": "spora-ai/spora-core",
-            "version": "v0.17.0",
+            "version": "v0.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-core.git",
-                "reference": "80714635fa7fbb32b05b3f299877f65a3db87428"
+                "reference": "70456a981c52c97d3ebb0613bd4aa6ae8c3bb085"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/80714635fa7fbb32b05b3f299877f65a3db87428",
-                "reference": "80714635fa7fbb32b05b3f299877f65a3db87428",
+                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/70456a981c52c97d3ebb0613bd4aa6ae8c3bb085",
+                "reference": "70456a981c52c97d3ebb0613bd4aa6ae8c3bb085",
                 "shasum": ""
             },
             "require": {
@@ -3133,22 +3133,22 @@
             "description": "A portable, zero-configuration AI agent orchestration platform that runs on any shared host (cPanel/FTP) without system dependencies beyond PHP 8.4+.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-core/issues",
-                "source": "https://github.com/spora-ai/spora-core/tree/v0.17.0"
+                "source": "https://github.com/spora-ai/spora-core/tree/v0.18.0"
             },
-            "time": "2026-08-15T09:14:07+00:00"
+            "time": "2026-08-27T07:58:09+00:00"
         },
         {
             "name": "spora-ai/spora-frontend",
-            "version": "v0.12.0",
+            "version": "v0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-frontend.git",
-                "reference": "d480c4e07f50c6b3060ace5aae393a818968900e"
+                "reference": "1d1b24dd81b84488ee6b786ac3701c5fd31ec236"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.12.0/spora-frontend-v0.12.0.tar.gz",
-                "reference": "d480c4e07f50c6b3060ace5aae393a818968900e"
+                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.13.0/spora-frontend-v0.13.0.tar.gz",
+                "reference": "1d1b24dd81b84488ee6b786ac3701c5fd31ec236"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -3168,27 +3168,27 @@
             "description": "Spora admin UI — prebuilt assets delivered as a Composer package. Consumed by spora-ai/spora-skeleton via spora-ai/installer.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-frontend/issues",
-                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.12.0"
+                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.13.0"
             },
-            "time": "2026-08-15T11:14:55+00:00"
+            "time": "2026-08-27T09:25:02+00:00"
         },
         {
             "name": "spora-ai/spora-plugin-openai-image",
-            "version": "v0.2.0",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-plugin-openai-image.git",
-                "reference": "491494ed840fda03058963e1f87ee1b948eb9e0b"
+                "reference": "a0977e01b8d9049ee4f7fcf32695826911f768d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-plugin-openai-image/zipball/491494ed840fda03058963e1f87ee1b948eb9e0b",
-                "reference": "491494ed840fda03058963e1f87ee1b948eb9e0b",
+                "url": "https://api.github.com/repos/spora-ai/spora-plugin-openai-image/zipball/a0977e01b8d9049ee4f7fcf32695826911f768d0",
+                "reference": "a0977e01b8d9049ee4f7fcf32695826911f768d0",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.4.1",
-                "spora-ai/spora-core": ">=0.15.0 <2.0.0 || @dev"
+                "spora-ai/spora-core": ">=0.18.0 <2.0.0 || @dev"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.94",
@@ -3210,9 +3210,9 @@
             "description": "OpenAI-compatible image generation for Spora agents.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-plugin-openai-image/issues",
-                "source": "https://github.com/spora-ai/spora-plugin-openai-image/tree/v0.2.0"
+                "source": "https://github.com/spora-ai/spora-plugin-openai-image/tree/v0.3.0"
             },
-            "time": "2026-08-07T22:31:25+00:00"
+            "time": "2026-08-27T08:52:38+00:00"
         },
         {
             "name": "symfony/clock",

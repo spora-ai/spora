@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a27a22d46c51cb76980302be04eb868",
+    "content-hash": "851384ff13b42a6d7824a90550c4558a",
     "packages": [
         {
             "name": "brick/math",
@@ -3174,21 +3174,21 @@
         },
         {
             "name": "spora-ai/spora-plugin-openai-image",
-            "version": "v0.2.0",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-plugin-openai-image.git",
-                "reference": "491494ed840fda03058963e1f87ee1b948eb9e0b"
+                "reference": "a0977e01b8d9049ee4f7fcf32695826911f768d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-plugin-openai-image/zipball/491494ed840fda03058963e1f87ee1b948eb9e0b",
-                "reference": "491494ed840fda03058963e1f87ee1b948eb9e0b",
+                "url": "https://api.github.com/repos/spora-ai/spora-plugin-openai-image/zipball/a0977e01b8d9049ee4f7fcf32695826911f768d0",
+                "reference": "a0977e01b8d9049ee4f7fcf32695826911f768d0",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.4.1",
-                "spora-ai/spora-core": ">=0.15.0 <2.0.0 || @dev"
+                "spora-ai/spora-core": ">=0.18.0 <2.0.0 || @dev"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.94",
@@ -3210,9 +3210,9 @@
             "description": "OpenAI-compatible image generation for Spora agents.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-plugin-openai-image/issues",
-                "source": "https://github.com/spora-ai/spora-plugin-openai-image/tree/v0.2.0"
+                "source": "https://github.com/spora-ai/spora-plugin-openai-image/tree/v0.3.0"
             },
-            "time": "2026-08-07T22:31:25+00:00"
+            "time": "2026-08-27T08:52:38+00:00"
         },
         {
             "name": "symfony/clock",

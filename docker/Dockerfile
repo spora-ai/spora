@@ -45,6 +45,9 @@ RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/storage/logs \
     && chown -R www-data:www-data /app /app/storage /app/public
 
+# Pin PHP error_log to stderr so supervisord captures PHP fatals alongside framework logs.
+RUN echo "error_log = php://stderr" > /usr/local/etc/php/conf.d/zz-spora-error-log.ini
+
 # Sonar S6471 acknowledged Safe: entrypoint chowns the named volumes
 # (/app/storage, /data, /config) then `exec gosu www-data supervisord`.
 # Same pattern as Postgres / MariaDB / Redis Official Images and

@@ -6,6 +6,8 @@ echo "Fixing ownership of named volumes (no-op after first boot)..."
 chown -R www-data:www-data /app/storage /data /config 2>/dev/null || true
 
 echo "Running Spora setup..."
+# Wipe any stale spora.log left over from previous deployments where SPORA_LOG_PATH pointed to a file. With SPORA_LOG_PATH=stdout the file is unused, but keeping it can mislead operators debugging "is anything logging here?".
+rm -f /app/storage/spora.log
 php /app/bin/spora spora:setup
 
 # Drop privileges per-program (in supervisord.conf) so PHP processes run as www-data

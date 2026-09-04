@@ -41,9 +41,11 @@ COPY --from=deps-builder /app/public/spora ./public/spora
 COPY docker/supervisord.conf /app/supervisord.conf
 COPY docker/frankenphp.conf /app/frankenphp.conf
 COPY docker/entrypoint.sh /entrypoint.sh
+# Runtime-layer init: drop entrypoint, create storage dir, chown app, pin PHP error_log to stderr so docker logs captures PHP fatals alongside framework logs.
 RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/storage/logs \
-    && chown -R www-data:www-data /app /app/storage /app/public
+    && chown -R www-data:www-data /app /app/storage /app/public \
+    && echo "error_log = php://stderr" > /usr/local/etc/php/conf.d/zz-spora-error-log.ini
 
 # Sonar S6471 acknowledged Safe: entrypoint chowns the named volumes
 # (/app/storage, /data, /config) then `exec gosu www-data supervisord`.

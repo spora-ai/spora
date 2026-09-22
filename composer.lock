@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93ce6b930fccc7b8845418df9c8fa269",
+    "content-hash": "088950045f36f294e684b6f76f6b0a30",
     "packages": [
         {
             "name": "brick/math",
@@ -777,27 +777,25 @@
         },
         {
             "name": "doctrine/lexer",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "31ad66abc0fc9e1a1f2d9bc6a42668d2fbbcd6dd"
+                "reference": "e96fe45e92a54233726014a7cc7340abf29bb14c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/31ad66abc0fc9e1a1f2d9bc6a42668d2fbbcd6dd",
-                "reference": "31ad66abc0fc9e1a1f2d9bc6a42668d2fbbcd6dd",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/e96fe45e92a54233726014a7cc7340abf29bb14c",
+                "reference": "e96fe45e92a54233726014a7cc7340abf29bb14c",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.1"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^12",
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^10.5",
-                "psalm/plugin-phpunit": "^0.18.3",
-                "vimeo/psalm": "^5.21"
+                "doctrine/coding-standard": "^14",
+                "phpstan/phpstan": "^2",
+                "phpunit/phpunit": "^10.5.58 || ^12.5.4"
             },
             "type": "library",
             "autoload": {
@@ -834,7 +832,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/lexer/issues",
-                "source": "https://github.com/doctrine/lexer/tree/3.0.1"
+                "source": "https://github.com/doctrine/lexer/tree/3.0.2"
             },
             "funding": [
                 {
@@ -850,7 +848,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-05T11:56:58+00:00"
+            "time": "2026-06-14T20:44:06+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -1897,16 +1895,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.10.1",
+            "version": "2.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "9d489ab67a02960fd8ffe624d93f751daf95439e"
+                "reference": "6efbd9c472b91db0a3350fcd601c8332c2382e1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/9d489ab67a02960fd8ffe624d93f751daf95439e",
-                "reference": "9d489ab67a02960fd8ffe624d93f751daf95439e",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/6efbd9c472b91db0a3350fcd601c8332c2382e1f",
+                "reference": "6efbd9c472b91db0a3350fcd601c8332c2382e1f",
                 "shasum": ""
             },
             "require": {
@@ -2000,7 +1998,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-07T13:44:26+00:00"
+            "time": "2026-09-21T13:07:34+00:00"
         },
         {
             "name": "league/config",
@@ -3209,16 +3207,16 @@
         },
         {
             "name": "spora-ai/spora-core",
-            "version": "v0.25.0",
+            "version": "v0.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-core.git",
-                "reference": "6f8739e67aa14bb1c2ec02c2d527da7c00d06952"
+                "reference": "0e39439fec4e9cf526a3b3a0a07ad6feb48be506"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/6f8739e67aa14bb1c2ec02c2d527da7c00d06952",
-                "reference": "6f8739e67aa14bb1c2ec02c2d527da7c00d06952",
+                "url": "https://api.github.com/repos/spora-ai/spora-core/zipball/0e39439fec4e9cf526a3b3a0a07ad6feb48be506",
+                "reference": "0e39439fec4e9cf526a3b3a0a07ad6feb48be506",
                 "shasum": ""
             },
             "require": {
@@ -3286,22 +3284,22 @@
             "description": "A portable, zero-configuration AI agent orchestration platform that runs on any shared host (cPanel/FTP) without system dependencies beyond PHP 8.4+.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-core/issues",
-                "source": "https://github.com/spora-ai/spora-core/tree/v0.25.0"
+                "source": "https://github.com/spora-ai/spora-core/tree/v0.26.0"
             },
-            "time": "2026-09-19T20:32:00+00:00"
+            "time": "2026-09-22T10:14:54+00:00"
         },
         {
             "name": "spora-ai/spora-frontend",
-            "version": "v0.20.0",
+            "version": "v0.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-frontend.git",
-                "reference": "42e15661a0d6d62bb3c7fe4d59595cdc8379fe96"
+                "reference": "1b326360359ebf3851796b349f4f2535f6cd0e48"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.20.0/spora-frontend-v0.20.0.tar.gz",
-                "reference": "42e15661a0d6d62bb3c7fe4d59595cdc8379fe96"
+                "url": "https://github.com/spora-ai/spora-frontend/releases/download/v0.21.0/spora-frontend-v0.21.0.tar.gz",
+                "reference": "1b326360359ebf3851796b349f4f2535f6cd0e48"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -3321,9 +3319,9 @@
             "description": "Spora admin UI — prebuilt assets delivered as a Composer package. Consumed by spora-ai/spora-skeleton via spora-ai/installer.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-frontend/issues",
-                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.20.0"
+                "source": "https://github.com/spora-ai/spora-frontend/tree/v0.21.0"
             },
-            "time": "2026-09-20T08:47:40+00:00"
+            "time": "2026-09-22T10:44:59+00:00"
         },
         {
             "name": "symfony/clock",

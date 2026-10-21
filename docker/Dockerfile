@@ -15,7 +15,11 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && mkdir -p plugins public/plugins
 
 # Runtime
-FROM dunglas/frankenphp:1-php8.5-bookworm
+# FrankenPHP and PHP are pinned to exact releases. The floating
+# `1-php8.5` tag moved to a new Caddy and Mercure hub underneath a
+# running deployment once already, which broke every boot, and it hides
+# which PHP patch is actually running.
+FROM dunglas/frankenphp:1.13.1-php8.5.12-bookworm
 
 WORKDIR /app
 

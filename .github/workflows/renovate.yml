@@ -32,6 +32,11 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      # Self-hosted Renovate has to be told which repository to work on. With
+      # the hosted app the installation decides that; here the workflow is
+      # already running in the one repository it should touch.
+      RENOVATE_REPOSITORIES: '["${{ github.repository }}"]'
     steps:
       - name: Renovate
         uses: renovatebot/github-action@a63d9a7bc606f7336fd20b47f2f32259a35e6213 # v46.3.9

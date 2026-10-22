@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": ["dockerfile"],
+  "schedule": ["* 2-3 * * *"],
+  "minimumReleaseAge": "3 days",
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["dunglas/frankenphp"],
+      "versioning": "loose",
+      "allowedVersions": "/^1\\.\\d+\\.\\d+-php8\\.5\\.\\d+-bookworm$/"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["composer"],
+      "versioning": "loose",
+      "allowedVersions": "/^2\\.\\d+(\\.\\d+)?$/"
+    }
+  ]
+}

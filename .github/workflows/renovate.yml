@@ -1,0 +1,39 @@
+# Keeps the base images in docker/Dockerfile current.
+#
+# The runtime tag is pinned to an exact release on purpose. The floating
+# `dunglas/frankenphp:1-php8.5-bookworm` moved to a new Caddy and Mercure
+# hub underneath a running deployment once already (spora-ai/spora#83) and
+# broke every boot, so the tag has to carry which PHP patch it was built on.
+# renovate.json keeps that tag pointed at the newest release that still
+# matches, and opens a pull request for it.
+#
+# `RENOVATE_TOKEN` is a personal access token with the `repo` scope. With
+# `GITHUB_TOKEN` the workflows on Renovate's own pull requests do not run
+# unattended - GitHub asks a maintainer to approve them first:
+# https://github.blog/changelog/2026-06-11-bot-created-pull-requests-can-run-workflows-if-approved/
+name: Renovate
+
+on:
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  statuses: write
+
+concurrency:
+  group: renovate-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Renovate
+        uses: renovatebot/github-action@a63d9a7bc606f7336fd20b47f2f32259a35e6213 # v46.3.9
+        with:
+          token: ${{ secrets.RENOVATE_TOKEN || secrets.GITHUB_TOKEN }}

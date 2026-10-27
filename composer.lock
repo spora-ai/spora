@@ -3167,16 +3167,16 @@
         },
         {
             "name": "spora-ai/installer",
-            "version": "v1.6.0",
+            "version": "v1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-installer.git",
-                "reference": "a39b806bcc783f3c9fa0c93fd164bd44ca1d2b59"
+                "reference": "af2141eaa0e891cbc04febdbb7c8796721ba2814"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-installer/zipball/a39b806bcc783f3c9fa0c93fd164bd44ca1d2b59",
-                "reference": "a39b806bcc783f3c9fa0c93fd164bd44ca1d2b59",
+                "url": "https://api.github.com/repos/spora-ai/spora-installer/zipball/af2141eaa0e891cbc04febdbb7c8796721ba2814",
+                "reference": "af2141eaa0e891cbc04febdbb7c8796721ba2814",
                 "shasum": ""
             },
             "require": {
@@ -3204,9 +3204,9 @@
             "description": "Routes `spora-plugin` packages to `plugins/{$name}/`, `spora-frontend` packages to `public/spora/`, and `spora-plugin-frontend` packages to `public/plugins/{$slug}/` when installed via Composer. Companion to spora-ai/spora-core.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-installer/issues",
-                "source": "https://github.com/spora-ai/spora-installer/tree/v1.6.0"
+                "source": "https://github.com/spora-ai/spora-installer/tree/v1.6.1"
             },
-            "time": "2026-08-02T08:00:46+00:00"
+            "time": "2026-08-12T10:01:54+00:00"
         },
         {
             "name": "spora-ai/spora-core",
@@ -9768,21 +9768,21 @@
         },
         {
             "name": "spora-ai/spora-maker",
-            "version": "0.1.4",
+            "version": "v0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spora-ai/spora-maker.git",
-                "reference": "fd4fc740ac02fdbec4f3eb76df48235ae17406b0"
+                "reference": "f1a7aa66fa56d9e84c8610b2fe068e89e118f036"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spora-ai/spora-maker/zipball/fd4fc740ac02fdbec4f3eb76df48235ae17406b0",
-                "reference": "fd4fc740ac02fdbec4f3eb76df48235ae17406b0",
+                "url": "https://api.github.com/repos/spora-ai/spora-maker/zipball/f1a7aa66fa56d9e84c8610b2fe068e89e118f036",
+                "reference": "f1a7aa66fa56d9e84c8610b2fe068e89e118f036",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.4",
-                "spora-ai/spora-core": ">=0.12.0 <2.0.0",
+                "spora-ai/spora-core": ">=0.30.0 <2.0.0",
                 "symfony/console": "^7.0 || ^8.0"
             },
             "require-dev": {
@@ -9809,9 +9809,9 @@
             "description": "Scaffolder for the Spora project App — generates Tools, Controllers, and the App.php entry class. Inspired by Symfony's MakerBundle. Install as a require-dev dep.",
             "support": {
                 "issues": "https://github.com/spora-ai/spora-maker/issues",
-                "source": "https://github.com/spora-ai/spora-maker/tree/0.1.4"
+                "source": "https://github.com/spora-ai/spora-maker/tree/v0.1.5"
             },
-            "time": "2026-08-02T07:46:10+00:00"
+            "time": "2026-10-26T12:32:51+00:00"
         },
         {
             "name": "staabm/side-effects-detector",

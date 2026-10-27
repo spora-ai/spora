@@ -6,8 +6,8 @@
     "require": {
         "php": "^8.4.1",
         "spora-ai/installer": "^1.5",
-        "spora-ai/spora-core": "^0.30.0",
-        "spora-ai/spora-frontend": "^0.25.0"
+        "spora-ai/spora-core": "^0.31.0",
+        "spora-ai/spora-frontend": "^0.26.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.1",

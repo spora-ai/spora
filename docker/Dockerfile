@@ -2,7 +2,7 @@
 
 # Composer stage — no Node toolchain; spora-ai/installer routes the
 # prebuilt frontend into public/spora/.
-FROM composer:2.8 AS deps-builder
+FROM composer:2.10.2 AS deps-builder
 
 WORKDIR /app
 

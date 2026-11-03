@@ -24,7 +24,8 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "spora-ai/installer": true,
-            "composer/installers": true
+            "composer/installers": true,
+            "cweagans/composer-patches": true
         }
     },
     "scripts": {

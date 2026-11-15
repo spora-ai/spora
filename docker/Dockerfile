@@ -2,7 +2,7 @@
 
 # Composer stage — no Node toolchain; spora-ai/installer routes the
 # prebuilt frontend into public/spora/.
-FROM composer:2.8 AS deps-builder
+FROM composer:2.11.2 AS deps-builder
 
 WORKDIR /app
 
@@ -19,7 +19,13 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 # `1-php8.5` tag moved to a new Caddy and Mercure hub underneath a
 # running deployment once already, which broke every boot, and it hides
 # which PHP patch is actually running.
-FROM dunglas/frankenphp:1.13.1-php8.5.12-bookworm
+#
+# The pin names the PHP patch because the PHP is what a host's extensions
+# are built against; it does not mean the tag is current. 1.13.2, 1.13.4
+# and 1.13.5 were security releases — 1.13.5 alone fixed seventeen
+# vulnerabilities, the most severe of which let `php_server` run an
+# uploaded file as PHP.
+FROM dunglas/frankenphp:1.13.5-php8.5.12-bookworm
 
 WORKDIR /app
 

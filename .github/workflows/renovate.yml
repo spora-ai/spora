@@ -11,6 +11,15 @@
 # `GITHUB_TOKEN` the workflows on Renovate's own pull requests do not run
 # unattended - GitHub asks a maintainer to approve them first:
 # https://github.blog/changelog/2026-06-11-bot-created-pull-requests-can-run-workflows-if-approved/
+#
+# `minimumReleaseAgeBehaviour: timestamp-optional` in renovate.json is what
+# makes the runtime tag reachable at all. The Docker registry reports no
+# release timestamp for the `dunglas/frankenphp` tags, and the default
+# behaviour holds a release with no timestamp pending forever - so the tag
+# stayed on 1.13.1 through four releases, three of them security releases,
+# and no pull request was ever opened. `timestamp-optional` keeps the
+# three-day window for the images that do carry a timestamp (the Composer
+# image) and lets the ones that do not through.
 name: Renovate
 
 on:

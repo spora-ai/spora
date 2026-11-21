@@ -25,7 +25,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 # and 1.13.5 were security releases — 1.13.5 alone fixed seventeen
 # vulnerabilities, the most severe of which let `php_server` run an
 # uploaded file as PHP.
-FROM dunglas/frankenphp:1.13.5-php8.5.12-bookworm
+FROM dunglas/frankenphp:1.14.0-php8.5.13-bookworm
 
 WORKDIR /app
 

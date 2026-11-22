@@ -17,17 +17,19 @@
         "dunglas/frankenphp"
       ],
       "versioning": "loose",
-      "allowedVersions": "/^1\\.\\d+\\.\\d+-php8\\.5\\.\\d+-bookworm$/"
+      "allowedVersions": "/^1\\.\\d+\\.\\d+-php8\\.5\\.\\d+-bookworm$/",
+      "groupName": "the PHP the deployment runs"
     },
     {
       "matchDatasources": [
         "docker"
       ],
       "matchPackageNames": [
-        "composer"
+        "php"
       ],
       "versioning": "loose",
-      "allowedVersions": "/^2\\.\\d+(\\.\\d+)?$/"
+      "allowedVersions": "/^8\\.5\\.\\d+-cli-alpine$/",
+      "groupName": "the PHP the deployment runs"
     }
   ]
 }

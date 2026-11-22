@@ -2,13 +2,32 @@
 
 # Composer stage — no Node toolchain; spora-ai/installer routes the
 # prebuilt frontend into public/spora/.
-FROM composer:2.11.2 AS deps-builder
+#
+# The base is the official PHP image rather than the Composer image, because
+# the Composer image is pinned by Composer version and its PHP floats — and
+# it floats per architecture, so the same tag can carry a PHP the runtime
+# stage does not satisfy. That made `composer install` abort on a dependency
+# capping its PHP range below what the base image happened to ship. Pinning
+# the base to the runtime's exact PHP patch means the two stages cannot
+# disagree, and no platform requirement has to be ignored.
+FROM php:8.5.12-cli-alpine AS deps-builder
 
 WORKDIR /app
 
-# composer.json requires ext-pdo_mysql; install it here so the
-# platform check during `composer install` doesn't abort.
-RUN docker-php-ext-install pdo_mysql
+# composer.json requires ext-pdo_mysql, and spora-ai/spora-core requires
+# ext-zip; install them here so the platform check during `composer install`
+# doesn't abort. The Composer image used to bundle ext-zip, the official PHP
+# image does not.
+RUN apk add --no-cache libzip-dev \
+    && docker-php-ext-install pdo_mysql zip \
+    && rm -rf /var/lib/apk/*
+
+# Composer itself, installed the way the Composer image does it. The version
+# is pinned so the resolver that builds vendor/ is the one the operator gets.
+ARG COMPOSER_VERSION=2.11.2
+RUN curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php \
+    && php /tmp/composer-setup.php --version="${COMPOSER_VERSION}" --install-dir=/usr/local/bin --filename=composer --quiet \
+    && rm /tmp/composer-setup.php
 
 COPY composer.json composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction \

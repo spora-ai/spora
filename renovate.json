@@ -30,6 +30,16 @@
       "versioning": "loose",
       "allowedVersions": "/^8\\.5\\.\\d+-cli-alpine$/",
       "groupName": "the PHP the deployment runs"
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "composer"
+      ],
+      "versioning": "loose",
+      "allowedVersions": "/^2\\.\\d+(\\.\\d+)?$/"
     }
   ]
 }

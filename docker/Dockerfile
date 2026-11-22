@@ -1,5 +1,9 @@
 # syntax=docker/dockerfile:1
 
+# Composer itself, taken from the official Composer image. The version is
+# pinned, and no code is fetched and run at build time.
+FROM composer:2.11.2 AS composer-bin
+
 # Composer stage — no Node toolchain; spora-ai/installer routes the
 # prebuilt frontend into public/spora/.
 #
@@ -26,15 +30,7 @@ RUN apk add --no-cache libzip-dev git \
     && docker-php-ext-install pdo_mysql zip \
     && rm -rf /var/lib/apk/*
 
-# Composer itself, installed the way the Composer image does it. The version
-# is pinned so the resolver that builds vendor/ is the one the operator gets,
-# and the download is checksummed so the build fails on a tampered or
-# truncated artefact rather than on a broken install.
-ARG COMPOSER_VERSION=2.11.2
-ADD --checksum=sha256:dd158c0afd41d15fac89e1b4e47b5d42911fe316c3687cd5edac98319b25d028 \
-    https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar \
-    /usr/local/bin/composer
-RUN chmod +x /usr/local/bin/composer
+COPY --from=composer-bin /usr/bin/composer /usr/local/bin/composer
 
 COPY composer.json composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction \

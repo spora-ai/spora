@@ -54,6 +54,35 @@ jobs:
           php bin/spora spora:install
           php bin/spora --version || true
 
+  smoke-86:
+    # PHP 8.6 compatibility check: the same install and boot the 8.4 smoke
+    # test runs. The lock file has to install on 8.6 for this job to get as
+    # far as the boot, so a dependency that caps its PHP range is a red
+    # build here.
+    name: Boot smoke test (PHP 8.6)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2.37.2
+        with:
+          php-version: '8.6'
+          extensions: pdo_sqlite, zip
+          tools: composer
+
+      - name: composer install
+        run: composer install --no-interaction
+        env:
+          COMPOSER_ALLOW_SUPERUSER: 1
+
+      - name: Boot CLI
+        run: |
+          touch storage/database.sqlite
+          export SPORA_SECRET_KEY="$(php -r 'echo base64_encode(random_bytes(32));')"
+          php bin/spora spora:install
+          php bin/spora --version || true
+
   build-docker:
     name: Build operator image
     needs: validate

@@ -18,16 +18,23 @@ WORKDIR /app
 # ext-zip; install them here so the platform check during `composer install`
 # doesn't abort. The Composer image used to bundle ext-zip, the official PHP
 # image does not.
-RUN apk add --no-cache libzip-dev \
+#
+# git is what cweagans/composer-patches applies a plugin's patches with. The
+# Composer image carried it, the official PHP image does not, and a plugin
+# that ships a patch would fail the install without it.
+RUN apk add --no-cache libzip-dev git \
     && docker-php-ext-install pdo_mysql zip \
     && rm -rf /var/lib/apk/*
 
 # Composer itself, installed the way the Composer image does it. The version
-# is pinned so the resolver that builds vendor/ is the one the operator gets.
+# is pinned so the resolver that builds vendor/ is the one the operator gets,
+# and the download is checksummed so the build fails on a tampered or
+# truncated artefact rather than on a broken install.
 ARG COMPOSER_VERSION=2.11.2
-RUN curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php \
-    && php /tmp/composer-setup.php --version="${COMPOSER_VERSION}" --install-dir=/usr/local/bin --filename=composer --quiet \
-    && rm /tmp/composer-setup.php
+ADD --checksum=sha256:dd158c0afd41d15fac89e1b4e47b5d42911fe316c3687cd5edac98319b25d028 \
+    https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar \
+    /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer
 
 COPY composer.json composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction \

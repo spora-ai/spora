@@ -30,7 +30,7 @@ set -eu
 root="$(cd "$(dirname "$0")/.." && pwd)"
 dockerfile="${1:-$root/docker/Dockerfile}"
 
-if [ ! -f "$dockerfile" ]; then
+if [[ ! -f "$dockerfile" ]]; then
     echo "$dockerfile is missing." >&2
     exit 2
 fi
@@ -38,12 +38,12 @@ fi
 builder="$(sed -n -E 's|^FROM[[:space:]]+php:([0-9]+\.[0-9]+\.[0-9]+)-.*|\1|p' "$dockerfile" | head -n 1)"
 runtime="$(sed -n -E 's|^FROM[[:space:]]+dunglas/frankenphp:[^-]*-php([0-9]+\.[0-9]+\.[0-9]+)-.*|\1|p' "$dockerfile" | head -n 1)"
 
-if [ -z "$builder" ] || [ -z "$runtime" ]; then
+if [[ -z "$builder" || -z "$runtime" ]]; then
     echo "Could not read a PHP patch from both base images in $dockerfile." >&2
     exit 2
 fi
 
-if [ "$builder" != "$runtime" ]; then
+if [[ "$builder" != "$runtime" ]]; then
     printf "The builder runs PHP %s and the runtime PHP %s.\n" "$builder" "$runtime" >&2
     echo "They must be the same patch: the builder resolves against the runtime's PHP." >&2
     exit 1

@@ -54,9 +54,9 @@ FROM dunglas/frankenphp:1.13.5-php8.5.12-bookworm
 
 WORKDIR /app
 
-# Slim runtime layer. `gosu` drops to www-data after the entrypoint's
-# one-shot chown of the named volumes (Postgres / MariaDB / Redis Official
-# Images convention).
+# Slim runtime layer. The entrypoint chowns the named volumes once and then
+# runs supervisord as root; supervisord drops each program to www-data on
+# its own (Postgres / MariaDB / Redis Official Images convention).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends supervisor gosu \
     && docker-php-ext-install pdo_mysql \
@@ -83,7 +83,8 @@ RUN chmod +x /entrypoint.sh \
     && echo "error_log = php://stderr" > /usr/local/etc/php/conf.d/zz-spora-error-log.ini
 
 # Sonar S6471 acknowledged Safe: entrypoint chowns the named volumes
-# (/app/storage, /data, /config) then `exec gosu www-data supervisord`.
+# (/app/storage, /data, /config) then runs supervisord as root, and
+# supervisord drops each program to www-data on its own.
 # Same pattern as Postgres / MariaDB / Redis Official Images and
 # LinuxServer.io — root phase is brief and non-interactive.
 USER root

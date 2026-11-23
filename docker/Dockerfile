@@ -32,6 +32,10 @@ RUN apk add --no-cache libzip-dev git \
 
 COPY --from=composer-bin /usr/bin/composer /usr/local/bin/composer
 
+# The Composer image set these; copying its binary does not carry them.
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    COMPOSER_HOME=/tmp/composer
+
 COPY composer.json composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && mkdir -p plugins public/plugins
@@ -43,9 +47,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 # which PHP patch is actually running.
 #
 # The pin names the PHP patch because the PHP is what a host's extensions
-# are built against; it does not mean the tag is current. 1.13.2, 1.13.4
-# and 1.13.5 were security releases — 1.13.5 alone fixed seventeen
-# vulnerabilities, the most severe of which let `php_server` run an
+# are built against; it does not mean the tag is current. The pinned release
+# is a security one: its most severe advisory let `php_server` run an
 # uploaded file as PHP.
 FROM dunglas/frankenphp:1.13.5-php8.5.12-bookworm
 

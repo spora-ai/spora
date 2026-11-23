@@ -1,14 +1,40 @@
 # syntax=docker/dockerfile:1
 
+# Composer itself, taken from the official Composer image. The version is
+# pinned, and no code is fetched and run at build time.
+FROM composer:2.11.2 AS composer-bin
+
 # Composer stage — no Node toolchain; spora-ai/installer routes the
 # prebuilt frontend into public/spora/.
-FROM composer:2.11.2 AS deps-builder
+#
+# The base is the official PHP image rather than the Composer image, because
+# the Composer image is pinned by Composer version and its PHP floats — and
+# it floats per architecture, so the same tag can carry a PHP the runtime
+# stage does not satisfy. That made `composer install` abort on a dependency
+# capping its PHP range below what the base image happened to ship. Pinning
+# the base to the runtime's exact PHP patch means the two stages agree, and
+# no platform requirement has to be ignored. scripts/check-php-pins.sh keeps
+# them agreeing when Renovate moves one of them.
+FROM php:8.5.12-cli-alpine AS deps-builder
 
 WORKDIR /app
 
-# composer.json requires ext-pdo_mysql; install it here so the
-# platform check during `composer install` doesn't abort.
-RUN docker-php-ext-install pdo_mysql
+# spora-core requires ext-pdo_mysql and ext-zip; install them here so the
+# platform check during `composer install` doesn't abort. The Composer image
+# used to bundle ext-zip, the official PHP image does not.
+#
+# git is what cweagans/composer-patches applies a plugin's patches with. The
+# Composer image carried it, the official PHP image does not, and a plugin
+# that ships a patch would fail the install without it.
+RUN apk add --no-cache libzip-dev git \
+    && docker-php-ext-install pdo_mysql zip \
+    && rm -rf /var/lib/apk/*
+
+COPY --from=composer-bin /usr/bin/composer /usr/local/bin/composer
+
+# The Composer image set these; copying its binary does not carry them.
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    COMPOSER_HOME=/tmp
 
 COPY composer.json composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
@@ -21,17 +47,16 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 # which PHP patch is actually running.
 #
 # The pin names the PHP patch because the PHP is what a host's extensions
-# are built against; it does not mean the tag is current. 1.13.2, 1.13.4
-# and 1.13.5 were security releases — 1.13.5 alone fixed seventeen
-# vulnerabilities, the most severe of which let `php_server` run an
-# uploaded file as PHP.
+# are built against; it does not mean the tag is current. Every release
+# since 1.13.5 carries the fix for the advisory that let `php_server` run
+# an uploaded file as PHP.
 FROM dunglas/frankenphp:1.13.5-php8.5.12-bookworm
 
 WORKDIR /app
 
-# Slim runtime layer. `gosu` drops to www-data after the entrypoint's
-# one-shot chown of the named volumes (Postgres / MariaDB / Redis Official
-# Images convention).
+# Slim runtime layer. The entrypoint chowns the named volumes once and then
+# runs supervisord as root; supervisord drops each program to www-data on
+# its own (Postgres / MariaDB / Redis Official Images convention).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends supervisor gosu \
     && docker-php-ext-install pdo_mysql \
@@ -58,7 +83,8 @@ RUN chmod +x /entrypoint.sh \
     && echo "error_log = php://stderr" > /usr/local/etc/php/conf.d/zz-spora-error-log.ini
 
 # Sonar S6471 acknowledged Safe: entrypoint chowns the named volumes
-# (/app/storage, /data, /config) then `exec gosu www-data supervisord`.
+# (/app/storage, /data, /config) then runs supervisord as root, and
+# supervisord drops each program to www-data on its own.
 # Same pattern as Postgres / MariaDB / Redis Official Images and
 # LinuxServer.io — root phase is brief and non-interactive.
 USER root

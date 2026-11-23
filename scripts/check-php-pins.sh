@@ -25,6 +25,12 @@
 # allowed a second minor could move one image onto a PHP the other does not
 # satisfy, which is the failure this arrangement exists to prevent.
 #
+# A rule it cannot read exactly is refused, not guessed at. A regular
+# expression cannot be sampled to find out what it admits - one that accepts
+# 8.6.1 but not 8.6.0 admits a second minor, and no finite set of samples
+# proves otherwise - so the rules have to have a shape the check reads
+# exactly.
+#
 # It asks the registry nothing, so it runs offline and in a second.
 #
 # Exit codes:
@@ -67,11 +73,21 @@ if [[ "$builder" != "$runtime" ]]; then
     exit 1
 fi
 
-# The PHP minors a rule admits, found by asking the rule's own pattern which
-# candidate tags it accepts. The pattern is the authority; reading it as text
-# would only handle the shapes it happens to be written in.
-allowed_minors() {
-    local image="$1" raw pattern minor tag
+# The PHP minor a rule admits.
+#
+# A regular expression cannot be sampled to find out what it admits: a
+# pattern that accepts 8.6.1 but not 8.6.0 admits a second minor, and no
+# finite set of samples proves otherwise. So the pattern has to have a shape
+# this check can read exactly - one literal PHP minor, and any patch - and a
+# pattern of any other shape is refused rather than guessed at.
+#
+# The two shapes are the ones this repository writes, on the decoded pattern
+# (Renovate's /pattern/ slashes removed):
+#   ^<major>.<minor>.\d+-cli-alpine$
+#   ^1.\d+.\d+-php<major>.<minor>.\d+-bookworm$
+admitted_minor() {
+    local image="$1" raw pattern
+
     raw="$(jq -r --arg image "$image" '
         (.packageRules[]? | select((.matchPackageNames // []) | index($image)) | .allowedVersions) // empty
     ' "$renovate" | head -n 1)"
@@ -80,36 +96,41 @@ allowed_minors() {
         return 1
     fi
 
-    # Renovate writes its patterns as /pattern/ in the JavaScript dialect.
-    # POSIX ERE has no \d, so it is spelled out.
     pattern="${raw#/}"
     pattern="${pattern%/}"
-    pattern="${pattern//\\d/[0-9]}"
 
-    for minor in 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4 8.5 8.6 8.7 8.8 8.9; do
-        case "$image" in
-            php) tag="$minor.0-cli-alpine" ;;
-            dunglas/frankenphp) tag="1.0.0-php$minor.0-bookworm" ;;
-            *) return 1 ;;
-        esac
-        if printf '%s' "$tag" | grep -qE "$pattern"; then
-            printf '%s ' "$minor"
-        fi
-    done | sed -E 's/[[:space:]]+$//'
+    case "$image" in
+        php)
+            if [[ "$pattern" =~ ^\^([0-9]+)\\\.([0-9]+)\\\.\\d\+\-cli-alpine\$$ ]]; then
+                printf '%s.%s\n' "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"
+                return 0
+            fi
+            ;;
+        dunglas/frankenphp)
+            if [[ "$pattern" =~ ^\^1\\\.\\d\+\\\.\\d\+\-php([0-9]+)\\\.([0-9]+)\\\.\\d\+\-bookworm\$$ ]]; then
+                printf '%s.%s\n' "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"
+                return 0
+            fi
+            ;;
+    esac
+
+    return 1
 }
 
-builder_minors="$(allowed_minors php)"
-runtime_minors="$(allowed_minors dunglas/frankenphp)"
+builder_minor="$(admitted_minor php || true)"
+runtime_minor="$(admitted_minor dunglas/frankenphp || true)"
 
-if [[ -z "$builder_minors" || -z "$runtime_minors" ]]; then
-    echo "Could not read a PHP minor from the Renovate rules for both images." >&2
-    exit 2
+if [[ -z "$builder_minor" || -z "$runtime_minor" ]]; then
+    echo "Could not read the PHP minor out of the Renovate rules." >&2
+    echo "A rule this check cannot read exactly is refused rather than guessed at:" >&2
+    echo "it has to name one PHP minor and allow any patch of it." >&2
+    exit 1
 fi
 
 minor="${builder%.*}"
-if [[ "$builder_minors" != "$minor" || "$runtime_minors" != "$minor" ]]; then
+if [[ "$builder_minor" != "$minor" || "$runtime_minor" != "$minor" ]]; then
     printf "The php rule admits PHP %s and the frankenphp rule admits PHP %s.\n" \
-        "$builder_minors" "$runtime_minors" >&2
+        "$builder_minor" "$runtime_minor" >&2
     printf "The images run PHP %s.\n" "$minor" >&2
     echo "Both rules must admit exactly the minor the images are pinned to: a rule" >&2
     echo "that admitted a second one could move one image onto a PHP the other does" >&2

@@ -15,7 +15,7 @@ FROM composer:2.11.2 AS composer-bin
 # the base to the runtime's exact PHP patch means the two stages agree, and
 # no platform requirement has to be ignored. scripts/check-php-pins.sh keeps
 # them agreeing when Renovate moves one of them.
-FROM php:8.5.12-cli-alpine AS deps-builder
+FROM php:8.5.13-cli-alpine AS deps-builder
 
 WORKDIR /app
 
@@ -50,7 +50,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 # are built against; it does not mean the tag is current. Every release
 # since 1.13.5 carries the fix for the advisory that let `php_server` run
 # an uploaded file as PHP.
-FROM dunglas/frankenphp:1.13.5-php8.5.12-bookworm
+FROM dunglas/frankenphp:1.14.0-php8.5.13-bookworm
 
 WORKDIR /app
 

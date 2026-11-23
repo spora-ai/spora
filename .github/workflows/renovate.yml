@@ -19,7 +19,7 @@
 # stayed on 1.13.1 through four releases, three of them security releases,
 # and no pull request was ever opened. `timestamp-optional` keeps the
 # three-day window for the images that do carry a timestamp (the Composer
-# image) and lets the ones that do not through.
+# and the PHP image) and lets the ones that do not through.
 name: Renovate
 
 on:

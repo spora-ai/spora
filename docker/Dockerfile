@@ -12,16 +12,16 @@ FROM composer:2.11.2 AS composer-bin
 # it floats per architecture, so the same tag can carry a PHP the runtime
 # stage does not satisfy. That made `composer install` abort on a dependency
 # capping its PHP range below what the base image happened to ship. Pinning
-# the base to the runtime's exact PHP patch means the two stages cannot
-# disagree, and no platform requirement has to be ignored.
+# the base to the runtime's exact PHP patch means the two stages agree, and
+# no platform requirement has to be ignored. scripts/check-php-pins.sh keeps
+# them agreeing when Renovate moves one of them.
 FROM php:8.5.12-cli-alpine AS deps-builder
 
 WORKDIR /app
 
-# composer.json requires ext-pdo_mysql, and spora-ai/spora-core requires
-# ext-zip; install them here so the platform check during `composer install`
-# doesn't abort. The Composer image used to bundle ext-zip, the official PHP
-# image does not.
+# spora-core requires ext-pdo_mysql and ext-zip; install them here so the
+# platform check during `composer install` doesn't abort. The Composer image
+# used to bundle ext-zip, the official PHP image does not.
 #
 # git is what cweagans/composer-patches applies a plugin's patches with. The
 # Composer image carried it, the official PHP image does not, and a plugin
@@ -34,7 +34,7 @@ COPY --from=composer-bin /usr/bin/composer /usr/local/bin/composer
 
 # The Composer image set these; copying its binary does not carry them.
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
-    COMPOSER_HOME=/tmp/composer
+    COMPOSER_HOME=/tmp
 
 COPY composer.json composer.lock* ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
@@ -47,9 +47,9 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 # which PHP patch is actually running.
 #
 # The pin names the PHP patch because the PHP is what a host's extensions
-# are built against; it does not mean the tag is current. The pinned release
-# is a security one: its most severe advisory let `php_server` run an
-# uploaded file as PHP.
+# are built against; it does not mean the tag is current. Every release
+# since 1.13.5 carries the fix for the advisory that let `php_server` run
+# an uploaded file as PHP.
 FROM dunglas/frankenphp:1.13.5-php8.5.12-bookworm
 
 WORKDIR /app
